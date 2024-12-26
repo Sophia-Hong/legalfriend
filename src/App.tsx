@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import BottomNav from "./components/BottomNav";
+import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import UsefulTips from "./pages/UsefulTips";
@@ -28,6 +29,7 @@ const App = () => (
               <Route path="/review-contract" element={<ReviewContract />} />
             </Routes>
           </main>
+          <ScrollToTop />
           <BottomNav />
         </div>
       </BrowserRouter>
