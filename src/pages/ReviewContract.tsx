@@ -113,10 +113,10 @@ const ReviewContract = () => {
               </div>
               
               {file ? (
-                <div className="relative inline-block">
+                <div className="relative inline-block px-6">
                   <button
                     onClick={handleDelete}
-                    className="absolute -top-2 -right-2 p-1.5 rounded-full bg-surface hover:bg-muted/20 transition-colors"
+                    className="absolute -top-1 -right-1 p-1 rounded-full bg-surface hover:bg-muted/20 transition-colors shadow-sm"
                     aria-label="Remove file"
                   >
                     <X className="w-4 h-4 text-primary" />
