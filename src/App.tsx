@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Index from "./pages/Index";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import UsefulTips from "./pages/UsefulTips";
+import ReviewContract from "./pages/ReviewContract";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/useful-tips" element={<UsefulTips />} />
+              <Route path="/review-contract" element={<ReviewContract />} />
             </Routes>
           </main>
         </div>
