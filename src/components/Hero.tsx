@@ -1,6 +1,6 @@
 const Hero = () => {
   return (
-    <div className="relative min-h-screen flex items-center justify-center pt-24">
+    <div className="relative min-h-screen flex items-center justify-center pt-12 md:pt-24">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-[#F8FAFF]">
         <div className="absolute inset-0" style={{
@@ -16,18 +16,18 @@ const Hero = () => {
       <div className="absolute top-1/3 right-1/3 w-3 h-3 rounded-full bg-white border-2 border-gray-200"></div>
       
       <div className="relative z-10 max-w-[1200px] mx-auto px-6 text-center">
-        <h1 className="text-4xl md:text-6xl lg:text-[80px] leading-[1.1] md:leading-[1] font-medium tracking-[-0.02em] text-primary mb-8">
+        <h1 className="text-4xl md:text-6xl lg:text-[80px] leading-[1.1] md:leading-[1] font-medium tracking-[-0.02em] text-primary mb-6 md:mb-8">
           Lease Contract<br />Review Assistant
         </h1>
         
-        <div className="max-w-[700px] mx-auto mb-12">
+        <div className="max-w-[700px] mx-auto mb-8 md:mb-12">
           <p className="text-lg md:text-xl text-primary/80">
             Don't sign what you don't understand. Our real lawyer-designed,
             AI-powered assistant provides fast, affordable contract reviews.
           </p>
         </div>
 
-        <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors mb-12">
+        <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors mb-8 md:mb-12">
           <span className="w-4 h-4">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
