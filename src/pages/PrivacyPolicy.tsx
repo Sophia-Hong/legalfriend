@@ -1,53 +1,80 @@
-import { Shield } from "lucide-react";
+import { Shield, Mail, MapPin, Phone, FileText } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-4xl mx-auto px-6 py-16">
-        <div className="flex items-center gap-3 mb-8">
-          <Shield className="w-8 h-8 text-primary" />
+        <div className="flex items-center gap-3 mb-12">
+          <Shield className="w-10 h-10 text-primary" />
           <h1 className="text-4xl font-semibold">Privacy Policy</h1>
         </div>
         
-        <div className="prose prose-lg max-w-none">
-          <p className="text-lg text-muted-foreground mb-8">
-            Welcome to LegalFriend! Your privacy is of utmost importance to us. This Privacy Policy outlines how we collect, use, store, and protect your personal information when you use our services, which include AI-powered lease agreement analysis.
-          </p>
+        <Card className="mb-8 bg-white/50 backdrop-blur-sm shadow-sm">
+          <CardContent className="p-6">
+            <p className="text-lg text-muted">
+              Welcome to LegalFriend! Your privacy is of utmost importance to us. This Privacy Policy outlines how we collect, use, store, and protect your personal information when you use our services, which include AI-powered lease agreement analysis.
+            </p>
+          </CardContent>
+        </Card>
 
-          <h2 className="text-2xl font-semibold mt-12 mb-6">1. Information We Collect</h2>
-          
-          <h3 className="text-xl font-medium mt-8 mb-4">a. Information You Provide Directly</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Uploaded Documents</strong>: If you upload lease agreements or other documents, we collect the information contained within these documents to provide our services. This may include:
-              <ul className="list-disc pl-6 mt-2 space-y-2">
-                <li>Personal identifiers (e.g., names, addresses)</li>
-                <li>Contract terms (e.g., rent amount, lease duration, obligations, and conditions)</li>
-              </ul>
-            </li>
-          </ul>
+        <div className="space-y-8">
+          <Card className="bg-white/50 backdrop-blur-sm shadow-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="w-6 h-6" />
+                1. Information We Collect
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-medium mb-3">a. Information You Provide Directly</h3>
+                  <ul className="list-disc pl-6 space-y-2 text-muted">
+                    <li>
+                      <strong>Uploaded Documents</strong>: If you upload lease agreements or other documents, we collect the information contained within these documents to provide our services. This may include:
+                      <ul className="list-disc pl-6 mt-2 space-y-2">
+                        <li>Personal identifiers (e.g., names, addresses)</li>
+                        <li>Contract terms (e.g., rent amount, lease duration, obligations, and conditions)</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
 
-          <h3 className="text-xl font-medium mt-8 mb-4">b. Automatically Collected Information</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Usage Data</strong>: When you interact with our website, we may collect technical information such as:
-              <ul className="list-disc pl-6 mt-2 space-y-2">
-                <li>IP addresses</li>
-                <li>Browser type and version</li>
-                <li>Pages visited and time spent on our website</li>
-              </ul>
-            </li>
-          </ul>
+                <div>
+                  <h3 className="text-xl font-medium mb-3">b. Automatically Collected Information</h3>
+                  <ul className="list-disc pl-6 space-y-2 text-muted">
+                    <li>
+                      <strong>Usage Data</strong>: When you interact with our website, we may collect technical information such as:
+                      <ul className="list-disc pl-6 mt-2 space-y-2">
+                        <li>IP addresses</li>
+                        <li>Browser type and version</li>
+                        <li>Pages visited and time spent on our website</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-          <h3 className="text-xl font-medium mt-8 mb-4">c. Communication Information</h3>
-          <p>If you contact us via email or other forms, we may collect your name, email address, and the contents of your communication.</p>
-
-          <h2 className="text-2xl font-semibold mt-12 mb-6">2. How We Use Your Information</h2>
-          <p>We use the information collected to:</p>
-          <ol className="list-decimal pl-6 space-y-2">
-            <li>Provide our services, including analyzing lease agreements and offering insights</li>
-            <li>Improve our services through anonymized data analysis and insights</li>
-            <li>Communicate with you regarding your use of our services, updates, and support requests</li>
-            <li>Ensure compliance with applicable laws and prevent fraudulent activities</li>
-          </ol>
+          <Card className="bg-white/50 backdrop-blur-sm shadow-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="w-6 h-6" />
+                2. How We Use Your Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted mb-4">We use the information collected to:</p>
+              <ol className="list-decimal pl-6 space-y-2 text-muted">
+                <li>Provide our services, including analyzing lease agreements and offering insights</li>
+                <li>Improve our services through anonymized data analysis and insights</li>
+                <li>Communicate with you regarding your use of our services, updates, and support requests</li>
+                <li>Ensure compliance with applicable laws and prevent fraudulent activities</li>
+              </ol>
+            </CardContent>
+          </Card>
 
           <h2 className="text-2xl font-semibold mt-12 mb-6">3. Sharing Your Information</h2>
           <p>We do not sell your personal information. However, we may share your information under the following circumstances:</p>
@@ -109,15 +136,45 @@ const PrivacyPolicy = () => {
           <h2 className="text-2xl font-semibold mt-12 mb-6">12. Updates to This Privacy Policy</h2>
           <p>We may update this Privacy Policy periodically to reflect changes in our practices or legal requirements. Updates will be posted on this page, and the "Last Updated" date will be revised. Continued use of our services constitutes acceptance of the updated Privacy Policy.</p>
 
-          <h3 className="text-xl font-medium mt-12 mb-4">13. Contact Us</h3>
-          <p>If you have questions or concerns about this Privacy Policy, please contact us at:</p>
-          <ul className="mt-4 space-y-2">
-            <li><strong>Email</strong>: info@legalfriend.ai</li>
-            <li><strong>Mailing Address</strong>: 41593 Winchester Rd. Suite 200, Temecula, CA 92590</li>
-            <li><strong>Phone Number</strong>: +1 571 382 8738</li>
-          </ul>
+          <Card className="bg-white/50 backdrop-blur-sm shadow-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Mail className="w-6 h-6" />
+                13. Contact Us
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted mb-6">If you have questions or concerns about this Privacy Policy, please contact us at:</p>
+              
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-primary" />
+                  <div>
+                    <p className="font-medium">Email</p>
+                    <p className="text-muted">info@legalfriend.ai</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-primary" />
+                  <div>
+                    <p className="font-medium">Mailing Address</p>
+                    <p className="text-muted">41593 Winchester Rd. Suite 200, Temecula, CA 92590</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-primary" />
+                  <div>
+                    <p className="font-medium">Phone Number</p>
+                    <p className="text-muted">+1 571 382 8738</p>
+                  </div>
+                </div>
+              </div>
 
-          <p className="text-sm text-muted-foreground mt-8">Effective Date: December 8, 2024</p>
+              <p className="text-sm text-muted mt-8">Effective Date: December 8, 2024</p>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
