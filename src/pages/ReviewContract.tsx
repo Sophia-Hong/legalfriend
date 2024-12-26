@@ -129,13 +129,13 @@ const ReviewContract = () => {
               ) : (
                 <div>
                   <p className="text-primary font-medium mb-2">
-                    Drag and drop your contract here
+                    Drag & Drop your contract here
                   </p>
                   <button
                     onClick={handleBrowseClick}
-                    className="text-lg text-primary underline decoration-2 hover:text-primary/80 transition-colors font-medium"
+                    className="text-lg text-blue-600 underline decoration-2 hover:text-blue-700 transition-colors font-medium"
                   >
-                    or click to browse
+                    or Click to Browse
                   </button>
                   <p className="text-sm text-muted mt-2">
                     (PDF or DOCX files accepted)
