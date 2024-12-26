@@ -16,12 +16,12 @@ const Hero = () => {
       <div className="absolute top-1/3 right-1/3 w-3 h-3 rounded-full bg-white border-2 border-gray-200"></div>
       
       <div className="relative z-10 max-w-[1200px] mx-auto px-6 text-center">
-        <h1 className="text-[80px] leading-[1] font-medium tracking-[-0.02em] text-primary mb-8">
+        <h1 className="text-4xl md:text-6xl lg:text-[80px] leading-[1.1] md:leading-[1] font-medium tracking-[-0.02em] text-primary mb-8">
           Lease Contract<br />Review Assistant
         </h1>
         
         <div className="max-w-[700px] mx-auto mb-12">
-          <p className="text-xl text-primary/80">
+          <p className="text-lg md:text-xl text-primary/80">
             Don't sign what you don't understand. Our real lawyer-designed,
             AI-powered assistant provides fast, affordable contract reviews.
           </p>
