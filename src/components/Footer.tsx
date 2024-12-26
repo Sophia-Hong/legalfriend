@@ -36,6 +36,8 @@ const Footer = () => {
             <ul className="space-y-3 text-accent">
               <li><a href="#" className="hover:text-white transition-colors">About</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
             </ul>
           </div>
         </div>
@@ -43,10 +45,6 @@ const Footer = () => {
         <div className="border-t border-white/10 mt-16 pt-8 text-accent text-sm">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p>© 2024 LegalFriend. All rights reserved.</p>
-            <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            </div>
           </div>
         </div>
       </div>
