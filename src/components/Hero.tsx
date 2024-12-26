@@ -1,6 +1,6 @@
 const Hero = () => {
   return (
-    <div className="relative min-h-screen flex items-center justify-center pt-12 md:pt-24">
+    <div className="relative min-h-screen flex items-start md:items-center justify-center pt-8 md:pt-24">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-[#F8FAFF]">
         <div className="absolute inset-0" style={{
@@ -15,7 +15,7 @@ const Hero = () => {
       <div className="absolute bottom-1/4 right-1/4 w-3 h-3 rounded-full bg-white border-2 border-gray-200"></div>
       <div className="absolute top-1/3 right-1/3 w-3 h-3 rounded-full bg-white border-2 border-gray-200"></div>
       
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-6 text-center mt-12 md:mt-0">
         <h1 className="text-4xl md:text-6xl lg:text-[80px] leading-[1.1] md:leading-[1] font-medium tracking-[-0.02em] text-primary mb-6 md:mb-8">
           Lease Contract<br />Review Assistant
         </h1>
