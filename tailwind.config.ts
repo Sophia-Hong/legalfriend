@@ -24,27 +24,31 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "#6366F1", // Indigo for the brand
-          foreground: "#FFFFFF",
-        },
-        secondary: {
-          DEFAULT: "#F7F7F8", // Light gray for secondary elements
-          foreground: "#1F2937",
-        },
-        accent: {
-          DEFAULT: "#FAFF00", // Bright yellow for accents/CTAs
-          foreground: "#1F2937",
-        },
-        muted: "#64748B",
-        surface: "#FFFFFF",
+        primary: "#141413",
+        secondary: "#828179",
+        accent: "#C4C3BB",
+        muted: "#A3A299",
+        highlight: "#F2FF44",
+        surface: "#FAFAF8",
       },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        }
       },
-      spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 6s ease-in-out infinite",
       },
     },
   },
