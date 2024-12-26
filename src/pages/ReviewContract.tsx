@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { Upload, FileText, AlertCircle } from "lucide-react";
+import { useState, useRef } from "react";
+import { Upload, FileText, AlertCircle, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const ReviewContract = () => {
   const [dragActive, setDragActive] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   const handleDrag = (e: React.DragEvent) => {
@@ -25,17 +26,17 @@ const ReviewContract = () => {
     setDragActive(false);
 
     const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile && droppedFile.type === "application/pdf") {
+    if (droppedFile && (droppedFile.type === "application/pdf" || droppedFile.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
       setFile(droppedFile);
       toast({
         title: "File uploaded successfully",
-        description: `${droppedFile.name} is ready for review`,
+        description: `${droppedFile.name} is ready for analysis`,
       });
     } else {
       toast({
         variant: "destructive",
         title: "Invalid file type",
-        description: "Please upload a PDF file",
+        description: "Please upload a PDF or DOCX file",
       });
     }
   };
@@ -44,26 +45,41 @@ const ReviewContract = () => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
       const uploadedFile = e.target.files[0];
-      if (uploadedFile.type === "application/pdf") {
+      if (uploadedFile.type === "application/pdf" || uploadedFile.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
         setFile(uploadedFile);
         toast({
           title: "File uploaded successfully",
-          description: `${uploadedFile.name} is ready for review`,
+          description: `${uploadedFile.name} is ready for analysis`,
         });
       } else {
         toast({
           variant: "destructive",
           title: "Invalid file type",
-          description: "Please upload a PDF file",
+          description: "Please upload a PDF or DOCX file",
         });
       }
     }
   };
 
+  const handleBrowseClick = () => {
+    inputRef.current?.click();
+  };
+
+  const handleDelete = () => {
+    setFile(null);
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+    toast({
+      title: "File removed",
+      description: "Your contract has been removed",
+    });
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-4xl font-bold text-primary mb-6">Review Your Contract</h1>
+        <h1 className="text-4xl font-bold text-primary mb-6">Upload Your Contract</h1>
         <p className="text-secondary mb-8">
           Upload your rental agreement for a professional review. We'll analyze your contract
           and provide detailed insights to protect your rights.
@@ -80,8 +96,9 @@ const ReviewContract = () => {
             onDrop={handleDrop}
           >
             <input
+              ref={inputRef}
               type="file"
-              accept=".pdf"
+              accept=".pdf,.docx"
               onChange={handleChange}
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
             />
@@ -96,7 +113,14 @@ const ReviewContract = () => {
               </div>
               
               {file ? (
-                <div>
+                <div className="relative">
+                  <button
+                    onClick={handleDelete}
+                    className="absolute -top-12 -right-12 p-2 rounded-full hover:bg-surface/50 transition-colors"
+                    aria-label="Remove file"
+                  >
+                    <X className="w-5 h-5 text-muted-foreground" />
+                  </button>
                   <p className="text-primary font-medium">{file.name}</p>
                   <p className="text-sm text-muted mt-1">
                     {(file.size / (1024 * 1024)).toFixed(2)} MB
@@ -107,8 +131,14 @@ const ReviewContract = () => {
                   <p className="text-primary font-medium">
                     Drag and drop your contract here
                   </p>
+                  <button
+                    onClick={handleBrowseClick}
+                    className="text-sm text-primary hover:text-primary/80 underline mt-1"
+                  >
+                    or click to browse
+                  </button>
                   <p className="text-sm text-muted mt-1">
-                    or click to browse (PDF files only)
+                    (PDF or DOCX files accepted)
                   </p>
                 </div>
               )}
@@ -120,15 +150,16 @@ const ReviewContract = () => {
           <div className="text-center">
             <Button
               size="lg"
-              className="bg-highlight text-primary hover:bg-highlight/90"
+              className="bg-highlight text-primary hover:bg-highlight/90 gap-2"
               onClick={() => {
                 toast({
-                  title: "Starting review process",
+                  title: "Starting analysis",
                   description: "We'll analyze your contract and get back to you shortly.",
                 });
               }}
             >
-              Start Review
+              <Sparkles className="w-5 h-5" />
+              Analyze Contract
             </Button>
           </div>
         )}
