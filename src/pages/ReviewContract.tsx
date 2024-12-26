@@ -113,13 +113,13 @@ const ReviewContract = () => {
               </div>
               
               {file ? (
-                <div className="relative">
+                <div className="relative inline-block">
                   <button
                     onClick={handleDelete}
-                    className="absolute -top-12 -right-12 p-2 rounded-full hover:bg-surface/50 transition-colors"
+                    className="absolute -top-2 -right-2 p-1.5 rounded-full bg-surface hover:bg-muted/20 transition-colors"
                     aria-label="Remove file"
                   >
-                    <X className="w-5 h-5 text-muted-foreground" />
+                    <X className="w-4 h-4 text-primary" />
                   </button>
                   <p className="text-primary font-medium">{file.name}</p>
                   <p className="text-sm text-muted mt-1">
@@ -128,16 +128,16 @@ const ReviewContract = () => {
                 </div>
               ) : (
                 <div>
-                  <p className="text-primary font-medium">
+                  <p className="text-primary font-medium mb-2">
                     Drag and drop your contract here
                   </p>
                   <button
                     onClick={handleBrowseClick}
-                    className="text-sm text-primary hover:text-primary/80 underline mt-1"
+                    className="text-lg text-primary underline decoration-2 hover:text-primary/80 transition-colors font-medium"
                   >
                     or click to browse
                   </button>
-                  <p className="text-sm text-muted mt-1">
+                  <p className="text-sm text-muted mt-2">
                     (PDF or DOCX files accepted)
                   </p>
                 </div>
