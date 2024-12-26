@@ -8,10 +8,10 @@ const Footer = () => {
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <span className="font-medium">Antimetal</span>
+              <span className="font-medium">LegalFriend</span>
             </div>
             <p className="text-accent text-sm">
-              Save time and money on AWS. Automated cloud cost optimization platform.
+              Don't sign what you don't understand. AI-powered lease contract review assistant.
             </p>
           </div>
           
@@ -19,8 +19,6 @@ const Footer = () => {
             <h3 className="font-medium mb-4">Product</h3>
             <ul className="space-y-3 text-accent">
               <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Enterprise</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
             </ul>
           </div>
@@ -28,9 +26,7 @@ const Footer = () => {
           <div>
             <h3 className="font-medium mb-4">Resources</h3>
             <ul className="space-y-3 text-accent">
-              <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">API Reference</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Useful Tips for Renters</a></li>
               <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
             </ul>
           </div>
@@ -39,16 +35,14 @@ const Footer = () => {
             <h3 className="font-medium mb-4">Company</h3>
             <ul className="space-y-3 text-accent">
               <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Legal</a></li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-white/10 mt-16 pt-8 text-accent text-sm">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>© 2024 Antimetal. All rights reserved.</p>
+            <p>© 2024 LegalFriend. All rights reserved.</p>
             <div className="flex gap-6">
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
