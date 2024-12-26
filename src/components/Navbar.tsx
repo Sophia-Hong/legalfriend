@@ -11,7 +11,7 @@ const Navbar = () => {
         
         <div className="hidden md:flex items-center gap-8">
           <a href="/" className="text-primary hover:text-primary/80 transition-colors">Home</a>
-          <a href="/review" className="text-primary hover:text-primary/80 transition-colors">Review Your Contract</a>
+          <a href="/review-contract" className="text-primary hover:text-primary/80 transition-colors">Review Your Contract</a>
           <a href="/useful-tips" className="text-primary hover:text-primary/80 transition-colors">Useful Tips</a>
           <a href="/about" className="text-primary hover:text-primary/80 transition-colors">About Us</a>
         </div>
@@ -20,9 +20,12 @@ const Navbar = () => {
           <button className="text-primary font-medium hover:text-primary/80 transition-colors">
             Sign In
           </button>
-          <button className="bg-highlight text-primary px-4 py-2 rounded-lg font-medium hover:bg-highlight/90 transition-colors">
+          <a 
+            href="/review-contract" 
+            className="bg-highlight text-primary px-4 py-2 rounded-lg font-medium hover:bg-highlight/90 transition-colors"
+          >
             Review Yours
-          </button>
+          </a>
         </div>
       </div>
     </nav>
