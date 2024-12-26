@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           <a href="/" className="text-primary hover:text-primary/80 transition-colors">Home</a>
           <a href="/review" className="text-primary hover:text-primary/80 transition-colors">Review Your Contract</a>
-          <a href="/tips" className="text-primary hover:text-primary/80 transition-colors">Useful Tips</a>
+          <a href="/useful-tips" className="text-primary hover:text-primary/80 transition-colors">Useful Tips</a>
           <a href="/about" className="text-primary hover:text-primary/80 transition-colors">About Us</a>
         </div>
 
