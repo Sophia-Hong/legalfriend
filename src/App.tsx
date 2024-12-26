@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import BottomNav from "./components/BottomNav";
 import Index from "./pages/Index";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import UsefulTips from "./pages/UsefulTips";
@@ -19,7 +20,7 @@ const App = () => (
       <BrowserRouter>
         <div className="min-h-screen bg-background">
           <Navbar />
-          <main className="pt-20">
+          <main className="pt-20 pb-24 md:pb-8">
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -27,6 +28,7 @@ const App = () => (
               <Route path="/review-contract" element={<ReviewContract />} />
             </Routes>
           </main>
+          <BottomNav />
         </div>
       </BrowserRouter>
     </TooltipProvider>
