@@ -12,7 +12,7 @@ const LeaseReviewSummary = () => {
         "- Residents: Miguel Rodriguez, Ana Rodriguez",
         "- Property: 15621 Palm View Drive, Santa Ana, CA"
       ],
-      assessment: { type: "success", text: "✓ All required information present and clearly stated" }
+      assessment: { type: "success" as const, text: "✓ All required information present and clearly stated" }
     },
     {
       provision: "Security Deposit",
@@ -22,7 +22,7 @@ const LeaseReviewSummary = () => {
         "- Return Timeline: 21 days after move-out"
       ],
       assessment: { 
-        type: "error", 
+        type: "error" as const, 
         text: "⚠ ALERT: Exceeds CA legal limit (max 2 months' rent for unfurnished units)",
         info: "Common practice: Request adjustment to align with legal maximum of $5,486 (2 months' rent)"
       }
@@ -35,7 +35,7 @@ const LeaseReviewSummary = () => {
         "- Notice Required: 60 days"
       ],
       assessment: { 
-        type: "error", 
+        type: "error" as const, 
         text: "⚠ ALERT: Combined penalties exceed typical market terms",
         info: "Standard market practice: Either termination fee OR rent continuation, typically not both"
       }
@@ -48,7 +48,7 @@ const LeaseReviewSummary = () => {
         "- Renewal: 60-day notice for month-to-month"
       ],
       assessment: { 
-        type: "warning", 
+        type: "warning" as const, 
         text: "! Notice period longer than typical",
         info: "Market reference: Most properties require 30-45 days notice"
       }
@@ -73,18 +73,23 @@ const LeaseReviewSummary = () => {
           
           <LeaseAnalysisTable sections={sections} />
 
-          {/* Torn paper effect */}
-          <div className="relative h-12 mt-8">
-            <div className="absolute inset-0 bg-white" style={{
-              maskImage: "linear-gradient(to bottom, white 50%, transparent 100%), url(\"data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 10, 40 0, 60 10, 80 0, 100 10, 100 0 Z' fill='white'/%3E%3C/svg%3E\")",
-              WebkitMaskImage: "linear-gradient(to bottom, white 50%, transparent 100%), url(\"data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 10, 40 0, 60 10, 80 0, 100 10, 100 0 Z' fill='white'/%3E%3C/svg%3E\")",
-              maskSize: "100% 100%, 20px 40px",
-              WebkitMaskSize: "100% 100%, 20px 40px",
-              maskRepeat: "no-repeat, repeat-x",
-              WebkitMaskRepeat: "no-repeat, repeat-x",
-              maskPosition: "center bottom, bottom",
-              WebkitMaskPosition: "center bottom, bottom",
-            }}></div>
+          {/* Torn paper effect with more pronounced tear and darker shadow */}
+          <div className="relative h-16 mt-8 mb-8">
+            <div 
+              className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white to-transparent"
+              style={{
+                maskImage: "linear-gradient(to bottom, white 50%, transparent 100%), url(\"data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 8, 40 12, 60 8, 80 12, 100 8, 100 0 Z' fill='white'/%3E%3C/svg%3E\")",
+                WebkitMaskImage: "linear-gradient(to bottom, white 50%, transparent 100%), url(\"data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 8, 40 12, 60 8, 80 12, 100 8, 100 0 Z' fill='white'/%3E%3C/svg%3E\")",
+                maskSize: "100% 100%, 20px 40px",
+                WebkitMaskSize: "100% 100%, 20px 40px",
+                maskRepeat: "no-repeat, repeat-x",
+                WebkitMaskRepeat: "no-repeat, repeat-x",
+                maskPosition: "center bottom, bottom",
+                WebkitMaskPosition: "center bottom, bottom",
+              }}
+            >
+              <div className="w-full h-full bg-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]"></div>
+            </div>
           </div>
 
           <LeaseCallToAction />
