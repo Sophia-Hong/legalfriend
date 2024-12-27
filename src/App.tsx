@@ -22,7 +22,7 @@ const App = () => (
       <BrowserRouter>
         <div className="min-h-screen bg-background flex flex-col">
           <Navbar />
-          <main className="pt-20 pb-24 md:pb-8 flex-grow">
+          <main className="pb-24 md:pb-8 flex-grow">
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
