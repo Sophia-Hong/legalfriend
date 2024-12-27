@@ -73,22 +73,23 @@ const LeaseReviewSummary = () => {
           
           <LeaseAnalysisTable sections={sections} />
 
-          {/* Torn paper effect with more pronounced tear and darker shadow */}
-          <div className="relative h-16 mt-8 mb-8">
+          {/* Enhanced torn paper effect */}
+          <div className="relative h-24 mt-12 mb-12">
             <div 
-              className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white to-transparent"
+              className="absolute inset-x-0 top-0 h-24"
               style={{
-                maskImage: "linear-gradient(to bottom, white 50%, transparent 100%), url(\"data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 8, 40 12, 60 8, 80 12, 100 8, 100 0 Z' fill='white'/%3E%3C/svg%3E\")",
-                WebkitMaskImage: "linear-gradient(to bottom, white 50%, transparent 100%), url(\"data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 8, 40 12, 60 8, 80 12, 100 8, 100 0 Z' fill='white'/%3E%3C/svg%3E\")",
-                maskSize: "100% 100%, 20px 40px",
-                WebkitMaskSize: "100% 100%, 20px 40px",
+                background: 'linear-gradient(to bottom, white 60%, rgba(255,255,255,0))',
+                maskImage: "linear-gradient(to bottom, white 50%, transparent 100%), url(\"data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 10, 30 20, 40 15, 50 25, 60 15, 70 20, 80 10, 90 15, 100 0 Z' fill='white'/%3E%3C/svg%3E\")",
+                WebkitMaskImage: "linear-gradient(to bottom, white 50%, transparent 100%), url(\"data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 10, 30 20, 40 15, 50 25, 60 15, 70 20, 80 10, 90 15, 100 0 Z' fill='white'/%3E%3C/svg%3E\")",
+                maskSize: "100% 100%, 33.33% 100%",
+                WebkitMaskSize: "100% 100%, 33.33% 100%",
                 maskRepeat: "no-repeat, repeat-x",
                 WebkitMaskRepeat: "no-repeat, repeat-x",
                 maskPosition: "center bottom, bottom",
                 WebkitMaskPosition: "center bottom, bottom",
               }}
             >
-              <div className="w-full h-full bg-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]"></div>
+              <div className="w-full h-full bg-white shadow-[0_8px_16px_-4px_rgba(0,0,0,0.2)]"></div>
             </div>
           </div>
 
