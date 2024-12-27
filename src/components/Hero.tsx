@@ -1,3 +1,5 @@
+import LeaseReviewSummary from "./LeaseReviewSummary";
+
 const Hero = () => {
   return (
     <div className="relative min-h-screen flex items-start md:items-center justify-center pt-8 md:pt-24">
@@ -36,12 +38,8 @@ const Hero = () => {
           Start Review
         </button>
 
-        <div className="max-w-[800px] mx-auto border-4 border-gray-200 rounded-xl shadow-xl overflow-hidden">
-          <img 
-            src="https://antimetal.com/images/hero/preview.png" 
-            alt="LegalFriend Demo Preview" 
-            className="w-full h-auto"
-          />
+        <div className="max-w-[1200px] mx-auto">
+          <LeaseReviewSummary />
         </div>
       </div>
     </div>
