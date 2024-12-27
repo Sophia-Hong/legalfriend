@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import BottomNav from "./components/BottomNav";
 import ScrollToTop from "./components/ScrollToTop";
+import Footer from "./components/Footer";
 import Index from "./pages/Index";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import UsefulTips from "./pages/UsefulTips";
@@ -19,9 +20,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-background flex flex-col">
           <Navbar />
-          <main className="pt-20 pb-24 md:pb-8">
+          <main className="pt-20 pb-24 md:pb-8 flex-grow">
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -30,6 +31,7 @@ const App = () => (
             </Routes>
           </main>
           <ScrollToTop />
+          <Footer />
           <BottomNav />
         </div>
       </BrowserRouter>
