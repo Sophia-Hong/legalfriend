@@ -122,8 +122,8 @@ const LeaseReviewSummary = () => {
             </div>
           </div>
 
-          {/* Torn paper effect before the button */}
-          <div className="relative h-8 mt-8 mb-4">
+          {/* Torn paper effect */}
+          <div className="relative h-12 mt-8">
             <div className="absolute inset-0 bg-white" style={{
               maskImage: "linear-gradient(to bottom, white 50%, transparent 100%), url(\"data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 10, 40 0, 60 10, 80 0, 100 10, 100 0 Z' fill='white'/%3E%3C/svg%3E\")",
               WebkitMaskImage: "linear-gradient(to bottom, white 50%, transparent 100%), url(\"data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 10, 40 0, 60 10, 80 0, 100 10, 100 0 Z' fill='white'/%3E%3C/svg%3E\")",
@@ -135,8 +135,8 @@ const LeaseReviewSummary = () => {
               WebkitMaskPosition: "center bottom, bottom",
             }}></div>
           </div>
-          
-          <div className="text-center">
+
+          <div className="text-center mt-4">
             <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors">
               Review Your Lease Now
             </button>
