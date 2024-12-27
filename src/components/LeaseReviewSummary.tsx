@@ -55,8 +55,8 @@ const LeaseReviewSummary = () => {
   ];
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto px-6 py-24">
-      <Card className="w-full bg-white shadow-xl">
+    <div className="w-full max-w-[1200px] mx-auto px-6 py-24 bg-[#F1F0FB]">
+      <Card className="w-full bg-white shadow-xl border border-accent/20 hover:shadow-2xl transition-shadow duration-300">
         <CardContent className="p-6 md:p-8">
           <div className="mb-8">
             <h2 className="text-2xl md:text-3xl font-medium text-center mb-3">Your Lease Review Analysis</h2>
@@ -77,15 +77,15 @@ const LeaseReviewSummary = () => {
                   {sections.map((section, index) => (
                     <tr key={index} className="border-b border-accent/20 hover:bg-surface/50 transition-colors">
                       <td className="p-4 align-top">
-                        <div className="font-medium text-primary">{section.provision}</div>
-                        <div className="text-sm text-secondary">{section.section}</div>
+                        <div className="font-medium text-primary text-left">{section.provision}</div>
+                        <div className="text-sm text-secondary text-left">{section.section}</div>
                       </td>
-                      <td className="p-4 text-primary/80 align-top">
+                      <td className="p-4 text-primary/80 align-top text-left">
                         {section.details.map((detail, idx) => (
                           <div key={idx} className="mb-1">{detail}</div>
                         ))}
                       </td>
-                      <td className="p-4 align-top">
+                      <td className="p-4 align-top text-left">
                         <div className="space-y-2">
                           <div className={`flex items-start gap-2 ${
                             section.assessment.type === "error" ? "text-red-600" :
