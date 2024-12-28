@@ -22,6 +22,7 @@ const Footer = () => {
             <ul className="space-y-3 text-accent">
               <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
+              <li><Link to="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
             </ul>
           </div>
           
@@ -29,7 +30,7 @@ const Footer = () => {
             <h3 className="font-medium mb-4">Resources</h3>
             <ul className="space-y-3 text-accent">
               <li><Link to="/useful-tips" className="hover:text-white transition-colors">Useful Tips for Renters</Link></li>
-              <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
+              <li><Link to="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
             </ul>
           </div>
           

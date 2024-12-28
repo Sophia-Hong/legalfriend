@@ -13,6 +13,7 @@ import UsefulTips from "./pages/UsefulTips";
 import ReviewContract from "./pages/ReviewContract";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import ContactUs from "./pages/ContactUs";
+import FAQ from "./pages/FAQ";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
               <Route path="/review-contract" element={<ReviewContract />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/contact-us" element={<ContactUs />} />
+              <Route path="/faq" element={<FAQ />} />
             </Routes>
           </main>
           <ScrollToTop />
