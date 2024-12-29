@@ -5,9 +5,9 @@ const ContactUs = () => {
   return (
     <div className="min-h-screen bg-surface">
       {/* Hero Section */}
-      <div className="relative h-[300px] overflow-hidden">
+      <div className="relative h-[400px] overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?q=80&w=2074&h=1072"
+          src="https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&h=1080"
           alt="Contact Us"
           className="w-full h-full object-cover"
         />
@@ -26,8 +26,8 @@ const ContactUs = () => {
       </div>
 
       {/* Contact Section */}
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto -mt-20 relative z-10 mb-24">
+      <div className="container mx-auto px-6 py-24">
+        <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <ContactInfo />
