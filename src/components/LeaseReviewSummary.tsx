@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { CheckCircle2, AlertTriangle, AlertOctagon } from 'lucide-react';
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -116,9 +117,11 @@ const LeaseReviewSummary = () => {
           </div>
           
           <div className="mt-8 text-center">
-            <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors">
-              Review Your Lease Now
-            </button>
+            <Link to="/review-contract">
+              <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors">
+                Review Your Lease Now
+              </button>
+            </Link>
             <p className="mt-3 text-sm text-secondary">
               Get your complete lease analysis in minutes
             </p>
