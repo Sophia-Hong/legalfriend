@@ -6,9 +6,9 @@ export const LeaseTable = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Scroll to the left on component mount for mobile devices
+    // Scroll to the right on component mount for mobile devices
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft = 0;
+      scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
     }
   }, []);
 
@@ -16,14 +16,14 @@ export const LeaseTable = () => {
     <div className="overflow-hidden rounded-lg border border-accent/20">
       <div 
         ref={scrollContainerRef}
-        className="overflow-x-auto -mx-4 sm:-mx-2 scroll-smooth"
+        className="overflow-x-auto -mx-4 sm:mx-0 scroll-smooth"
       >
-        <table className="w-full border-collapse min-w-[500px]">
+        <table className="w-full border-collapse min-w-[700px]">
           <thead>
             <tr className="bg-surface">
-              <th className="p-2 sm:p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20 w-[20%] sm:w-1/3 text-[13px] sm:text-sm whitespace-normal">Provision & Section</th>
-              <th className="p-2 sm:p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20 w-[40%] sm:w-1/3 text-[13px] sm:text-sm">Key Terms</th>
-              <th className="p-2 sm:p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20 text-[13px] sm:text-sm">Analysis & Context</th>
+              <th className="p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20 w-1/4">Provision & Section</th>
+              <th className="p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20 w-2/5">Key Terms</th>
+              <th className="p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20">Analysis & Context</th>
             </tr>
           </thead>
           <tbody>
