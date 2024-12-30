@@ -24,7 +24,7 @@ const UsefulTips = () => {
 
   return (
     <div className="min-h-screen bg-surface">
-      <div className="max-w-[1200px] mx-auto px-6 py-24">
+      <div className="max-w-[1400px] mx-auto px-6 py-24">
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl font-medium tracking-tight text-primary mb-6">
@@ -36,7 +36,7 @@ const UsefulTips = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="relative max-w-2xl mx-auto mb-16">
+        <div className="relative max-w-2xl mx-auto mb-20">
           <Search className="absolute left-4 top-3.5 h-5 w-5 text-secondary" />
           <Input
             type="text"
@@ -55,7 +55,7 @@ const UsefulTips = () => {
             Error loading articles. Please try again later.
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 gap-x-16 gap-y-20">
+          <div className="grid lg:grid-cols-2 gap-x-24 gap-y-24">
             {filteredPosts.map((post) => (
               <TipCard
                 key={post.id}
