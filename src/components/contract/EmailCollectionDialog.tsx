@@ -49,7 +49,12 @@ const EmailCollectionDialog = ({
             required
           />
           <div className="flex justify-end">
-            <Button type="submit">Continue to Payment</Button>
+            <Button 
+              type="submit"
+              className="bg-highlight text-primary hover:bg-highlight/90"
+            >
+              Submit
+            </Button>
           </div>
         </form>
       </DialogContent>
