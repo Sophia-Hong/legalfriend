@@ -13,7 +13,7 @@ export const ToastTitle = React.forwardRef<
     {...props}
   >
     {props['data-destructive'] && (
-      <AlertCircle className="h-5 w-5 text-red-500" />
+      <AlertCircle className="h-5 w-5 text-red-500 shrink-0" />
     )}
     {props.children}
   </ToastPrimitives.Title>
