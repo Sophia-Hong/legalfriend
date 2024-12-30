@@ -13,17 +13,16 @@ const ReviewContract = () => {
     if (!file) {
       toast({
         variant: "destructive",
-        title: "No contract uploaded",
-        description: "Please upload a contract first",
+        title: "Please upload a contract first",
+        description: "Upload your rental agreement to proceed with the analysis.",
       });
       return;
     }
 
-                toast({
-                  title: "Starting analysis",
-                  description:
-                    "We'll analyze your contract and get back to you shortly.",
-                });
+    toast({
+      title: "Starting analysis",
+      description: "We'll analyze your contract and get back to you shortly.",
+    });
   };
 
   return (
