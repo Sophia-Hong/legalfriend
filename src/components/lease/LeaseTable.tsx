@@ -6,9 +6,9 @@ export const LeaseTable = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Initialize scroll position to 0 to show the leftmost content
+    // Scroll to the right on component mount to show the rightmost content first
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft = 0;
+      scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
     }
   }, []);
 
