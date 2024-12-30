@@ -3,53 +3,23 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import TipCard from "@/components/tips/TipCard";
 import { useState } from "react";
-
-const tips = [
-  {
-    id: 1,
-    category: "Lease Basics",
-    title: "Understanding Your Lease Agreement: A Complete Guide",
-    description: "Learn the essential components of a lease agreement and what to look for before signing.",
-    readTime: "8 min read",
-    date: "Mar 15, 2024",
-    image: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?q=80&w=1000"
-  },
-  {
-    id: 2,
-    category: "Tenant Rights",
-    title: "Know Your Rights: A Guide for Tenants in the USA",
-    description: "Understand your legal rights as a tenant and how to protect yourself in any rental situation.",
-    readTime: "10 min read",
-    date: "Mar 10, 2024",
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1000"
-  },
-  {
-    id: 3,
-    category: "Financial Planning",
-    title: "Budgeting for Your First Apartment: Hidden Costs to Consider",
-    description: "A comprehensive guide to all the costs involved in renting, beyond just the monthly rent.",
-    readTime: "6 min read",
-    date: "Mar 5, 2024",
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1000"
-  },
-  {
-    id: 4,
-    category: "Moving Tips",
-    title: "The Ultimate Moving Checklist for Renters",
-    description: "Step-by-step guide to ensure a smooth transition to your new rental home.",
-    readTime: "7 min read",
-    date: "Mar 1, 2024",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000"
-  }
-];
+import { useQuery } from "@tanstack/react-query";
+import { getBlogPosts } from "@/services/blogService";
+import { format } from "date-fns";
 
 const UsefulTips = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredTips = tips.filter(tip =>
-    tip.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    tip.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    tip.category.toLowerCase().includes(searchQuery.toLowerCase())
+  const { data: posts = [], isLoading } = useQuery({
+    queryKey: ['blog-posts'],
+    queryFn: getBlogPosts,
+  });
+
+  const filteredPosts = posts.filter(post =>
+    post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    post.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   return (
@@ -79,11 +49,28 @@ const UsefulTips = () => {
 
         {/* Tips Grid */}
         <ScrollArea className="h-[800px] pr-6">
-          <div className="grid md:grid-cols-2 gap-8">
-            {filteredTips.map((tip) => (
-              <TipCard key={tip.id} {...tip} />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="text-center py-8">Loading...</div>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-8">
+              {filteredPosts.map((post) => (
+                <TipCard
+                  key={post.id}
+                  category={post.category}
+                  title={post.title}
+                  description={post.description}
+                  readTime={post.read_time}
+                  date={format(new Date(post.published_at), 'MMM d, yyyy')}
+                  image={post.image_url}
+                />
+              ))}
+              {filteredPosts.length === 0 && (
+                <div className="col-span-2 text-center py-8 text-secondary">
+                  No articles found matching your search criteria.
+                </div>
+              )}
+            </div>
+          )}
         </ScrollArea>
       </div>
     </div>
