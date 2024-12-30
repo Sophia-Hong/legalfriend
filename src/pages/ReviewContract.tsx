@@ -1,22 +1,29 @@
 import { useState } from "react";
 import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import FileUploadZone from "@/components/contract/FileUploadZone";
 import FilePreview from "@/components/contract/FilePreview";
-import PrivacyNotice from "@/components/contract/PrivacyNotice";
 
 const ReviewContract = () => {
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
 
-  const handleDelete = () => {
-    setFile(null);
-    toast({
-      title: "File removed",
-      description: "Your contract has been removed",
-    });
+  const handleAnalyze = () => {
+    if (!file) {
+      toast({
+        variant: "destructive",
+        title: "No contract uploaded",
+        description: "Please upload a contract first",
+      });
+      return;
+    }
+
+                toast({
+                  title: "Starting analysis",
+                  description:
+                    "We'll analyze your contract and get back to you shortly.",
+                });
   };
 
   return (
@@ -30,30 +37,26 @@ const ReviewContract = () => {
           your contract and provide detailed insights to protect your rights.
         </p>
 
-        <Card className="p-8 mb-8">
+        <div className="space-y-8">
           <FileUploadZone file={file} onFileChange={setFile} />
-        </Card>
+          
+          {file && (
+            <div className="flex justify-center">
+              <FilePreview file={file} onDelete={() => setFile(null)} />
+            </div>
+          )}
 
-        {file && (
           <div className="text-center">
             <Button
               size="lg"
               className="bg-highlight text-primary hover:bg-highlight/90 gap-2"
-              onClick={() => {
-                toast({
-                  title: "Starting analysis",
-                  description:
-                    "We'll analyze your contract and get back to you shortly.",
-                });
-              }}
+              onClick={handleAnalyze}
             >
               <Sparkles className="w-5 h-5" />
               Analyze Contract
             </Button>
           </div>
-        )}
-
-        <PrivacyNotice />
+        </div>
       </div>
     </div>
   );
