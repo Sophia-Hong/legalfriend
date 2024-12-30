@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import FileUploadZone from "@/components/contract/FileUploadZone";
 import FilePreview from "@/components/contract/FilePreview";
+import EmailCollectionDialog from "@/components/contract/EmailCollectionDialog";
+import { supabase } from "@/integrations/supabase/client";
 
 const ReviewContract = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
   const { toast } = useToast();
 
   const handleAnalyze = () => {
@@ -19,10 +22,47 @@ const ReviewContract = () => {
       return;
     }
 
-    toast({
-      title: "Starting analysis",
-      description: "We'll analyze your contract and get back to you shortly.",
-    });
+    setShowEmailDialog(true);
+  };
+
+  const handleEmailSubmit = async (email: string) => {
+    try {
+      // Upload file to Supabase Storage
+      const fileExt = file!.name.split(".").pop();
+      const filePath = `${crypto.randomUUID()}.${fileExt}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from("contracts")
+        .upload(filePath, file!);
+
+      if (uploadError) throw uploadError;
+
+      // Create contract submission record
+      const { error: dbError } = await supabase
+        .from("contract_submissions")
+        .insert({
+          user_email: email,
+          contract_file_path: filePath,
+        });
+
+      if (dbError) throw dbError;
+
+      toast({
+        title: "Contract uploaded successfully",
+        description: "Redirecting to payment...",
+      });
+
+      // TODO: Redirect to payment page
+      setShowEmailDialog(false);
+      
+    } catch (error: any) {
+      console.error("Error processing contract:", error);
+      toast({
+        variant: "destructive",
+        title: "Error processing contract",
+        description: error.message,
+      });
+    }
   };
 
   return (
@@ -56,6 +96,12 @@ const ReviewContract = () => {
             </Button>
           </div>
         </div>
+
+        <EmailCollectionDialog
+          isOpen={showEmailDialog}
+          onClose={() => setShowEmailDialog(false)}
+          onSubmit={handleEmailSubmit}
+        />
       </div>
     </div>
   );
