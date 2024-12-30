@@ -1,4 +1,3 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import TipCard from "@/components/tips/TipCard";
@@ -38,45 +37,43 @@ const UsefulTips = () => {
 
         {/* Search Bar */}
         <div className="relative max-w-2xl mx-auto mb-16">
-          <Search className="absolute left-4 top-3 h-5 w-5 text-secondary" />
+          <Search className="absolute left-4 top-3.5 h-5 w-5 text-secondary" />
           <Input
             type="text"
             placeholder="Search articles..."
-            className="pl-12 h-12 bg-white border-gray-200"
+            className="pl-12 h-12 bg-white border-gray-200 text-base"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
         {/* Tips Grid */}
-        <ScrollArea className="h-[800px] pr-6">
-          {isLoading ? (
-            <div className="text-center py-8">Loading...</div>
-          ) : error ? (
-            <div className="text-center py-8 text-red-500">
-              Error loading articles. Please try again later.
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 gap-8">
-              {filteredPosts.map((post) => (
-                <TipCard
-                  key={post.id}
-                  category={post.category}
-                  title={post.title}
-                  description={post.description}
-                  readTime={post.read_time}
-                  date={format(new Date(post.published_at || post.created_at), 'MMM d, yyyy')}
-                  image={post.image_url}
-                />
-              ))}
-              {filteredPosts.length === 0 && (
-                <div className="col-span-2 text-center py-8 text-secondary">
-                  No articles found matching your search criteria.
-                </div>
-              )}
-            </div>
-          )}
-        </ScrollArea>
+        {isLoading ? (
+          <div className="text-center py-8">Loading...</div>
+        ) : error ? (
+          <div className="text-center py-8 text-red-500">
+            Error loading articles. Please try again later.
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-x-16 gap-y-20">
+            {filteredPosts.map((post) => (
+              <TipCard
+                key={post.id}
+                category={post.category}
+                title={post.title}
+                description={post.description}
+                readTime={post.read_time}
+                date={format(new Date(post.published_at || post.created_at), 'MMM d, yyyy')}
+                image={post.image_url}
+              />
+            ))}
+            {filteredPosts.length === 0 && (
+              <div className="col-span-2 text-center py-8 text-secondary">
+                No articles found matching your search criteria.
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

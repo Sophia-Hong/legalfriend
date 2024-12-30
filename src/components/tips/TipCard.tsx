@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 interface TipCardProps {
   category: string;
@@ -12,12 +12,12 @@ interface TipCardProps {
 
 const TipCard = ({ category, title, description, readTime, date, image }: TipCardProps) => {
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border-0">
-      <div className="relative h-48 overflow-hidden">
+    <Card className="overflow-hidden border-none shadow-none">
+      <div className="relative h-[240px] overflow-hidden rounded-lg mb-4">
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover"
         />
         <div className="absolute top-4 left-4">
           <span className="px-3 py-1 bg-highlight text-primary text-sm font-medium rounded-full">
@@ -26,22 +26,18 @@ const TipCard = ({ category, title, description, readTime, date, image }: TipCar
         </div>
       </div>
       
-      <CardContent className="p-6">
-        <h3 className="text-xl font-semibold text-primary mb-3 line-clamp-2 hover:text-primary/80 transition-colors">
+      <CardContent className="px-0">
+        <h3 className="text-2xl font-medium text-primary mb-2 hover:text-primary/80 transition-colors">
           {title}
         </h3>
-        <p className="text-secondary mb-4 line-clamp-2">
+        <p className="text-secondary mb-4">
           {description}
         </p>
-        <div className="flex items-center gap-4 text-sm text-muted">
-          <div className="flex items-center gap-1">
-            <Calendar className="h-4 w-4" />
-            <span>{date}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            <span>{readTime}</span>
-          </div>
+        <div className="flex items-center gap-2 text-sm text-secondary">
+          <Calendar className="h-4 w-4" />
+          <span>{date}</span>
+          <span className="mx-2">·</span>
+          <span>{readTime}</span>
         </div>
       </CardContent>
     </Card>
