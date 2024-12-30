@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Upload, FileText, File } from "lucide-react";
+import { Upload, FileText, FilePdf } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface FileUploadZoneProps {
@@ -32,7 +32,7 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
       toast({
         title: "File uploaded successfully",
         description: `${uploadedFile.name} is ready for analysis`,
-        duration: 3000, // Auto dismiss after 3 seconds
+        duration: 3000,
       });
     } else {
       toast({
@@ -65,12 +65,12 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
   };
 
   const getFileIcon = () => {
-    if (!file) return <Upload className="w-8 h-8 text-primary" />;
+    if (!file) return <Upload className="w-12 h-12 text-primary" />;
     
     return file.type === "application/pdf" ? (
-      <FileText className="w-8 h-8 text-primary" />
+      <FilePdf className="w-12 h-12 text-primary" />
     ) : (
-      <File className="w-8 h-8 text-primary" />
+      <FileText className="w-12 h-12 text-primary" />
     );
   };
 
@@ -92,19 +92,25 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
       />
 
-      <div className="space-y-4">
-        <div className="w-16 h-16 mx-auto bg-surface rounded-full flex items-center justify-center">
+      <div className="space-y-6">
+        <div className="w-24 h-24 mx-auto bg-surface rounded-full flex items-center justify-center shadow-sm">
           {getFileIcon()}
         </div>
 
         <div>
           {file ? (
             <div className="space-y-2">
-              <p className="text-primary font-medium truncate max-w-[90%] mx-auto" title={file.name}>
+              <p 
+                className="text-lg text-primary font-medium truncate max-w-[90%] mx-auto" 
+                title={file.name}
+              >
                 {file.name}
               </p>
               <p className="text-sm text-muted">
                 {(file.size / (1024 * 1024)).toFixed(2)} MB
+              </p>
+              <p className="text-xs text-muted mt-1">
+                Click or drag to replace
               </p>
             </div>
           ) : (
