@@ -3,7 +3,6 @@ import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import FileUploadZone from "@/components/contract/FileUploadZone";
-import FilePreview from "@/components/contract/FilePreview";
 import EmailCollectionDialog from "@/components/contract/EmailCollectionDialog";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -50,6 +49,7 @@ const ReviewContract = () => {
       toast({
         title: "Contract uploaded successfully",
         description: "Redirecting to payment...",
+        duration: 3000, // Auto dismiss after 3 seconds
       });
 
       // TODO: Redirect to payment page
@@ -78,12 +78,6 @@ const ReviewContract = () => {
 
         <div className="space-y-8">
           <FileUploadZone file={file} onFileChange={setFile} />
-          
-          {file && (
-            <div className="flex justify-center">
-              <FilePreview file={file} onDelete={() => setFile(null)} />
-            </div>
-          )}
 
           <div className="text-center">
             <Button
