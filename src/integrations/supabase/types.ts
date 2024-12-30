@@ -60,6 +60,52 @@ export type Database = {
         }
         Relationships: []
       }
+      contract_submissions: {
+        Row: {
+          analysis_result: Json | null
+          completed_at: string | null
+          contract_file_path: string
+          created_at: string | null
+          id: string
+          payment_status: boolean | null
+          pdf_url: string | null
+          share_token: string | null
+          status: Database["public"]["Enums"]["contract_analysis_status"] | null
+          updated_at: string | null
+          user_email: string
+        }
+        Insert: {
+          analysis_result?: Json | null
+          completed_at?: string | null
+          contract_file_path: string
+          created_at?: string | null
+          id?: string
+          payment_status?: boolean | null
+          pdf_url?: string | null
+          share_token?: string | null
+          status?:
+            | Database["public"]["Enums"]["contract_analysis_status"]
+            | null
+          updated_at?: string | null
+          user_email: string
+        }
+        Update: {
+          analysis_result?: Json | null
+          completed_at?: string | null
+          contract_file_path?: string
+          created_at?: string | null
+          id?: string
+          payment_status?: boolean | null
+          pdf_url?: string | null
+          share_token?: string | null
+          status?:
+            | Database["public"]["Enums"]["contract_analysis_status"]
+            | null
+          updated_at?: string | null
+          user_email?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -73,6 +119,11 @@ export type Database = {
         | "Tenant Rights"
         | "Moving Tips"
         | "Financial Planning"
+      contract_analysis_status:
+        | "pending"
+        | "processing"
+        | "completed"
+        | "failed"
       post_status: "draft" | "published" | "archived"
     }
     CompositeTypes: {
