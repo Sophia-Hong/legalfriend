@@ -31,22 +31,23 @@ const EmailCollectionDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Mail className="w-5 h-5" />
+        <DialogHeader className="space-y-4">
+          <DialogTitle className="flex items-center gap-2 text-xl">
+            <Mail className="w-6 h-6" />
             Get Your Analysis
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-base">
             We're generating your custom analysis. Where should we send the results?
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6 mt-4">
           <Input
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="h-12"
           />
           <div className="flex justify-end">
             <Button 
