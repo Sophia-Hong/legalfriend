@@ -10,16 +10,17 @@ import { format } from "date-fns";
 const UsefulTips = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data: posts = [], isLoading } = useQuery({
+  const { data: posts = [], isLoading, error } = useQuery({
     queryKey: ['blog-posts'],
     queryFn: getBlogPosts,
   });
 
+  // Filter posts based on search query
   const filteredPosts = posts.filter(post =>
     post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
     post.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+    (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
   );
 
   return (
@@ -51,6 +52,10 @@ const UsefulTips = () => {
         <ScrollArea className="h-[800px] pr-6">
           {isLoading ? (
             <div className="text-center py-8">Loading...</div>
+          ) : error ? (
+            <div className="text-center py-8 text-red-500">
+              Error loading articles. Please try again later.
+            </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-8">
               {filteredPosts.map((post) => (
@@ -60,7 +65,7 @@ const UsefulTips = () => {
                   title={post.title}
                   description={post.description}
                   readTime={post.read_time}
-                  date={format(new Date(post.published_at), 'MMM d, yyyy')}
+                  date={format(new Date(post.published_at || post.created_at), 'MMM d, yyyy')}
                   image={post.image_url}
                 />
               ))}
