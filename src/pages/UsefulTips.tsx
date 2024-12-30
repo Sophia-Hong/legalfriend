@@ -30,8 +30,8 @@ const UsefulTips = () => {
           <h1 className="text-5xl font-medium tracking-tight text-primary mb-6">
             Resources
           </h1>
-          <p className="text-xl text-secondary max-w-2xl mx-auto">
-            Expert insights and practical guides to help you navigate the rental process with confidence.
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Expert insights and practical guides<br />to help you navigate the rental process with confidence.
           </p>
         </div>
 
