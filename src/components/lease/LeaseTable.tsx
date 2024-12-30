@@ -21,9 +21,9 @@ export const LeaseTable = () => {
         <table className="w-full border-collapse min-w-[500px]">
           <thead>
             <tr className="bg-surface">
-              <th className="p-2 sm:p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20 w-[30%] sm:w-1/3">Provision & Section</th>
-              <th className="p-2 sm:p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20 w-[35%] sm:w-1/3">Key Terms</th>
-              <th className="p-2 sm:p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20">Analysis & Context</th>
+              <th className="p-2 sm:p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20 w-[20%] sm:w-1/3 text-[13px] sm:text-sm">Provision & Section</th>
+              <th className="p-2 sm:p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20 w-[40%] sm:w-1/3 text-[13px] sm:text-sm">Key Terms</th>
+              <th className="p-2 sm:p-3 md:p-4 text-left text-primary font-medium border-b border-accent/20 text-[13px] sm:text-sm">Analysis & Context</th>
             </tr>
           </thead>
           <tbody>
