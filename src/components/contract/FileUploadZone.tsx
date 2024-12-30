@@ -76,7 +76,8 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
     });
   };
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleZoneClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (!file) {
       inputRef.current?.click();
     }
@@ -91,7 +92,7 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
       onDrop={handleDrop}
-      onClick={handleClick}
+      onClick={handleZoneClick}
     >
       {file && <RemoveFileButton onRemove={handleRemoveFile} />}
 
@@ -101,7 +102,6 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
         accept=".pdf,.docx"
         onChange={handleChange}
         className="hidden"
-        onClick={e => e.stopPropagation()}
       />
 
       <div className="space-y-6">
