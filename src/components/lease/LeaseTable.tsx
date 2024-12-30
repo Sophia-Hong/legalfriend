@@ -6,9 +6,9 @@ export const LeaseTable = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Scroll to the right on component mount for mobile devices
+    // Scroll to the left on component mount for mobile devices
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+      scrollContainerRef.current.scrollLeft = 0;
     }
   }, []);
 
@@ -16,7 +16,7 @@ export const LeaseTable = () => {
     <div className="overflow-hidden rounded-lg border border-accent/20">
       <div 
         ref={scrollContainerRef}
-        className="overflow-x-auto -mx-4 sm:mx-0 scroll-smooth"
+        className="overflow-x-auto -mx-4 sm:-mx-2 scroll-smooth"
       >
         <table className="w-full border-collapse min-w-[500px]">
           <thead>
