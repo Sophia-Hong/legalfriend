@@ -26,7 +26,7 @@ const UsefulTips = () => {
     <div className="min-h-screen bg-surface">
       <div className="max-w-[1200px] mx-auto px-6 py-24">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h1 className="text-5xl font-medium tracking-tight text-primary mb-6">
             Resources
           </h1>
