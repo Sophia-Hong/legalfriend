@@ -19,8 +19,8 @@ export const LeaseSection = ({ provision, section, details, assessment }: LeaseS
   return (
     <tr className="border-b border-accent/20 hover:bg-surface/50 transition-colors">
       <td className="p-2 sm:p-3 md:p-4 align-top">
-        <div className="font-medium text-primary text-left text-xs sm:text-sm break-words whitespace-normal min-w-[120px]">{provision}</div>
-        <div className="text-xs text-secondary text-left break-words whitespace-normal">{section}</div>
+        <div className="font-medium text-primary text-left text-xs sm:text-sm break-words whitespace-normal min-w-0">{provision}</div>
+        <div className="text-xs text-secondary text-left break-words whitespace-normal min-w-0">{section}</div>
       </td>
       <td className="p-2 sm:p-3 md:p-4 text-primary/80 align-top text-left">
         {details.map((detail, idx) => (
