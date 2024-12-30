@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Upload, FileText, FilePdf } from "lucide-react";
+import { Upload, FileText, File, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface FileUploadZoneProps {
@@ -64,11 +64,24 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
     inputRef.current?.click();
   };
 
+  const handleRemoveFile = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering file upload dialog
+    onFileChange(null);
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+    toast({
+      title: "File removed",
+      description: "You can now upload a different document",
+      duration: 3000,
+    });
+  };
+
   const getFileIcon = () => {
     if (!file) return <Upload className="w-12 h-12 text-primary" />;
     
     return file.type === "application/pdf" ? (
-      <FilePdf className="w-12 h-12 text-primary" />
+      <File className="w-12 h-12 text-primary" />
     ) : (
       <FileText className="w-12 h-12 text-primary" />
     );
@@ -84,6 +97,16 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
       onDragOver={handleDrag}
       onDrop={handleDrop}
     >
+      {file && (
+        <button
+          onClick={handleRemoveFile}
+          className="absolute top-2 right-2 p-1 rounded-full hover:bg-surface/50 transition-colors"
+          title="Remove file"
+        >
+          <X className="w-5 h-5 text-muted-foreground" />
+        </button>
+      )}
+
       <input
         ref={inputRef}
         type="file"
