@@ -18,7 +18,15 @@ interface LeaseSection {
 export const LeaseSection = ({ provision, section, details, assessment }: LeaseSection) => {
   return (
     <tr className="border-b border-accent/20 hover:bg-surface/50 transition-colors">
-      {/* Reorder columns to match thead order */}
+      <td className="p-3 md:p-4 align-top">
+        <div className="font-medium text-primary text-left text-sm sm:text-base">{provision}</div>
+        <div className="text-xs sm:text-sm text-secondary text-left">{section}</div>
+      </td>
+      <td className="p-3 md:p-4 text-primary/80 align-top text-left text-sm sm:text-base">
+        {details.map((detail, idx) => (
+          <div key={idx} className="mb-1">{detail}</div>
+        ))}
+      </td>
       <td className="p-3 md:p-4 align-top text-left">
         <div className="space-y-2">
           <div className={`flex items-start gap-2 ${
@@ -36,20 +44,11 @@ export const LeaseSection = ({ provision, section, details, assessment }: LeaseS
             <span className="font-medium text-sm sm:text-base">{assessment.text}</span>
           </div>
           {assessment.info && (
-            <div className="text-xs sm:text-sm text-secondary ml-7">
+            <div className="text-xs sm:text-sm text-secondary ml-7 mt-1">
               {assessment.info}
             </div>
           )}
         </div>
-      </td>
-      <td className="p-3 md:p-4 align-top">
-        <div className="font-medium text-primary text-left text-sm sm:text-base">{provision}</div>
-        <div className="text-xs sm:text-sm text-secondary text-left">{section}</div>
-      </td>
-      <td className="p-3 md:p-4 text-primary/80 align-top text-left text-sm sm:text-base">
-        {details.map((detail, idx) => (
-          <div key={idx} className="mb-1">{detail}</div>
-        ))}
       </td>
     </tr>
   );
