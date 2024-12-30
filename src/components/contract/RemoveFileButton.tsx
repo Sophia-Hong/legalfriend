@@ -5,9 +5,15 @@ interface RemoveFileButtonProps {
 }
 
 const RemoveFileButton = ({ onRemove }: RemoveFileButtonProps) => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onRemove(e);
+  };
+
   return (
     <button
-      onClick={onRemove}
+      onClick={handleClick}
       className="absolute top-2 right-2 p-1 rounded-full hover:bg-surface/50 transition-colors"
       title="Remove file"
     >
