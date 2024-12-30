@@ -30,29 +30,29 @@ const EmailCollectionDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md w-[95%] mx-auto">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader className="space-y-4">
-          <DialogTitle className="flex items-center gap-2 text-2xl md:text-3xl font-bold">
-            <Mail className="w-7 h-7 md:w-8 md:h-8" />
+          <DialogTitle className="flex items-center gap-2 text-xl">
+            <Mail className="w-6 h-6" />
             Get Your Analysis
           </DialogTitle>
-          <DialogDescription className="text-base md:text-lg">
+          <DialogDescription className="text-base">
             We're generating your custom analysis. Where should we send the results?
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-6 mt-6">
+        <form onSubmit={handleSubmit} className="space-y-6 mt-4">
           <Input
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="h-12 text-base md:text-lg"
+            className="h-12"
           />
           <div className="flex justify-end">
             <Button 
               type="submit"
-              className="bg-highlight text-primary hover:bg-highlight/90 text-base md:text-lg px-6 py-2"
+              className="bg-highlight text-primary hover:bg-highlight/90"
             >
               Submit
             </Button>
