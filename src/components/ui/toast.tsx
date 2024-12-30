@@ -92,13 +92,13 @@ const ToastTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Title
     ref={ref}
-    className={cn("text-sm font-semibold flex items-center gap-2", className)}
+    className={cn("text-base font-semibold flex items-center gap-2", className)}
     {...props}
   >
-    {props.children}
     {props['data-destructive'] && (
       <AlertCircle className="h-5 w-5 text-red-500" />
     )}
+    {props.children}
   </ToastPrimitives.Title>
 ))
 ToastTitle.displayName = ToastPrimitives.Title.displayName
