@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import LeaseReviewSummary from "./LeaseReviewSummary";
 
 const Hero = () => {
@@ -29,14 +30,16 @@ const Hero = () => {
           </p>
         </div>
 
-        <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors mb-6 md:mb-12">
-          <span className="w-4 h-4">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </span>
-          Start Review
-        </button>
+        <Link to="/review-contract">
+          <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors mb-6 md:mb-12">
+            <span className="w-4 h-4">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
+            Start Review
+          </button>
+        </Link>
 
         <div className="max-w-[1200px] mx-auto">
           <LeaseReviewSummary />
