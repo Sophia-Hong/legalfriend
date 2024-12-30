@@ -9,7 +9,57 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      blog_posts: {
+        Row: {
+          category: Database["public"]["Enums"]["blog_category"]
+          content: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string
+          published_at: string | null
+          read_time: string
+          slug: string | null
+          status: Database["public"]["Enums"]["post_status"]
+          tags: string[] | null
+          title: string
+          updated_at: string
+          views_count: number
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["blog_category"]
+          content: string
+          created_at?: string
+          description: string
+          id?: string
+          image_url: string
+          published_at?: string | null
+          read_time: string
+          slug?: string | null
+          status?: Database["public"]["Enums"]["post_status"]
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          views_count?: number
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["blog_category"]
+          content?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string
+          published_at?: string | null
+          read_time?: string
+          slug?: string | null
+          status?: Database["public"]["Enums"]["post_status"]
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          views_count?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +68,12 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      blog_category:
+        | "Lease Basics"
+        | "Tenant Rights"
+        | "Moving Tips"
+        | "Financial Planning"
+      post_status: "draft" | "published" | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
