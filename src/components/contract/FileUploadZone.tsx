@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
-import { Upload, FileText, File, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import FilePreviewIcon from "./FilePreviewIcon";
+import RemoveFileButton from "./RemoveFileButton";
+import FileDetails from "./FileDetails";
 
 interface FileUploadZoneProps {
   file: File | null;
@@ -60,12 +62,8 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
     }
   };
 
-  const handleBrowseClick = () => {
-    inputRef.current?.click();
-  };
-
   const handleRemoveFile = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent triggering file upload dialog
+    e.stopPropagation();
     onFileChange(null);
     if (inputRef.current) {
       inputRef.current.value = '';
@@ -75,16 +73,6 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
       description: "You can now upload a different document",
       duration: 3000,
     });
-  };
-
-  const getFileIcon = () => {
-    if (!file) return <Upload className="w-12 h-12 text-primary" />;
-    
-    return file.type === "application/pdf" ? (
-      <File className="w-12 h-12 text-primary" />
-    ) : (
-      <FileText className="w-12 h-12 text-primary" />
-    );
   };
 
   return (
@@ -97,15 +85,7 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
       onDragOver={handleDrag}
       onDrop={handleDrop}
     >
-      {file && (
-        <button
-          onClick={handleRemoveFile}
-          className="absolute top-2 right-2 p-1 rounded-full hover:bg-surface/50 transition-colors"
-          title="Remove file"
-        >
-          <X className="w-5 h-5 text-muted-foreground" />
-        </button>
-      )}
+      {file && <RemoveFileButton onRemove={handleRemoveFile} />}
 
       <input
         ref={inputRef}
@@ -117,39 +97,11 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
 
       <div className="space-y-6">
         <div className="w-24 h-24 mx-auto bg-surface rounded-full flex items-center justify-center shadow-sm">
-          {getFileIcon()}
+          <FilePreviewIcon file={file} />
         </div>
 
         <div>
-          {file ? (
-            <div className="space-y-2">
-              <p 
-                className="text-lg text-primary font-medium truncate max-w-[90%] mx-auto" 
-                title={file.name}
-              >
-                {file.name}
-              </p>
-              <p className="text-sm text-muted">
-                {(file.size / (1024 * 1024)).toFixed(2)} MB
-              </p>
-              <p className="text-xs text-muted mt-1">
-                Click or drag to replace
-              </p>
-            </div>
-          ) : (
-            <>
-              <p className="text-primary font-medium mb-2">
-                Drag & Drop your contract here
-              </p>
-              <button
-                onClick={handleBrowseClick}
-                className="text-lg text-blue-600 underline decoration-2 hover:text-blue-700 transition-colors font-medium"
-              >
-                or Click to Browse
-              </button>
-              <p className="text-sm text-muted mt-2">(PDF or DOCX files accepted)</p>
-            </>
-          )}
+          <FileDetails file={file} />
         </div>
       </div>
     </div>
