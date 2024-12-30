@@ -1,10 +1,23 @@
+import { useEffect, useRef } from 'react';
 import { LeaseSection } from './LeaseSection';
 import { leaseSections } from './leaseData';
 
 export const LeaseTable = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Scroll to the right on component mount for mobile devices
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+    }
+  }, []);
+
   return (
     <div className="overflow-hidden rounded-lg border border-accent/20">
-      <div className="overflow-x-auto -mx-4 sm:mx-0">
+      <div 
+        ref={scrollContainerRef}
+        className="overflow-x-auto -mx-4 sm:mx-0 scroll-smooth"
+      >
         <table className="w-full border-collapse min-w-[700px]">
           <thead>
             <tr className="bg-surface">
