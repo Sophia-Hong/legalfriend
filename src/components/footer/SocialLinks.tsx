@@ -49,7 +49,7 @@ const SocialLinks = () => {
         <img 
           src="/lovable-uploads/984f40c0-76f3-497b-8579-e9df525724e2.png"
           alt="Threads"
-          className="w-5 h-5"
+          className="w-5 h-5 opacity-80 hover:opacity-100 transition-opacity"
         />
       </a>
     </div>
