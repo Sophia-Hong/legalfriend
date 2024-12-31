@@ -1,7 +1,7 @@
-export * from './user';
-export * from './contract';
-export * from './payment';
-export * from './keyterm';
+import { Profile, UserRole } from './user';
+import { Contract, ContractStatus, Analysis } from './contract';
+import { Payment, PaymentStatus } from './payment';
+import { KeyTerm, KeyTermRevision, TermConversation } from './keyterm';
 
 // Database type helpers
 export type Json =
@@ -60,3 +60,9 @@ export interface Database {
     };
   };
 }
+
+// Re-export all types for convenience
+export * from './user';
+export * from './contract';
+export * from './payment';
+export * from './keyterm';
