@@ -23,8 +23,3 @@ supabase.auth.onAuthStateChange((event, session) => {
   console.log('Supabase auth event:', event);
   console.log('Session:', session);
 });
-
-// Add request logging
-supabase.from('blog_posts').on('*', payload => {
-  console.log('Real-time change received!', payload);
-});
