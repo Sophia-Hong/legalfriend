@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface TipCardProps {
   category: string;
@@ -8,16 +9,17 @@ interface TipCardProps {
   readTime: string;
   date: string;
   image: string;
+  slug?: string;
 }
 
-const TipCard = ({ category, title, description, readTime, date, image }: TipCardProps) => {
-  return (
-    <Card className="overflow-hidden border-none shadow-none">
+const TipCard = ({ category, title, description, readTime, date, image, slug }: TipCardProps) => {
+  const content = (
+    <Card className="overflow-hidden border-none shadow-none group">
       <div className="relative h-[240px] overflow-hidden rounded-lg mb-4">
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute top-4 left-4">
           <span className="px-3 py-1 bg-highlight text-primary text-sm font-medium rounded-full">
@@ -27,7 +29,7 @@ const TipCard = ({ category, title, description, readTime, date, image }: TipCar
       </div>
       
       <CardContent className="px-0">
-        <h3 className="text-2xl font-medium text-primary mb-2 hover:text-primary/80 transition-colors">
+        <h3 className="text-2xl font-medium text-primary mb-2 group-hover:text-primary/80 transition-colors">
           {title}
         </h3>
         <p className="text-secondary mb-4">
@@ -41,6 +43,14 @@ const TipCard = ({ category, title, description, readTime, date, image }: TipCar
         </div>
       </CardContent>
     </Card>
+  );
+
+  return slug ? (
+    <Link to={`/blog/${slug}`} className="block">
+      {content}
+    </Link>
+  ) : (
+    content
   );
 };
 

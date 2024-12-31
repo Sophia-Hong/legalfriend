@@ -141,6 +141,7 @@ const UsefulTips = () => {
                       readTime={post.read_time}
                       date={format(new Date(post.published_at || post.created_at), 'MMM d, yyyy')}
                       image={post.image_url}
+                      slug={post.slug}
                     />
                   </article>
                 ))}

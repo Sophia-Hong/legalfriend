@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import Index from "./pages/Index";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import UsefulTips from "./pages/UsefulTips";
+import BlogPost from "./pages/BlogPost";
 import ReviewContract from "./pages/ReviewContract";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import ContactUs from "./pages/ContactUs";
@@ -30,6 +31,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/useful-tips" element={<UsefulTips />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/review-contract" element={<ReviewContract />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/contact-us" element={<ContactUs />} />
