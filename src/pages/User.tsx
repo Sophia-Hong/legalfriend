@@ -92,11 +92,11 @@ const User = () => {
             />
             <label htmlFor="terms" className="text-sm text-muted">
               I agree to the{" "}
-              <a href="/terms-and-conditions" className="text-highlight hover:underline">
+              <a href="/terms-and-conditions" className="text-primary hover:underline">
                 Terms of Use
               </a>{" "}
               and{" "}
-              <a href="/privacy-policy" className="text-highlight hover:underline">
+              <a href="/privacy-policy" className="text-primary hover:underline">
                 Privacy Policy
               </a>
             </label>
@@ -105,7 +105,7 @@ const User = () => {
           <Button
             type="submit"
             className={cn(
-              "w-full bg-highlight text-primary hover:bg-highlight/90",
+              "w-full bg-accent text-primary hover:bg-accent/90",
               isLoading && "opacity-50 cursor-not-allowed"
             )}
             disabled={isLoading}
@@ -142,7 +142,7 @@ const User = () => {
 
           <div className="text-center space-x-1 text-sm">
             <span className="text-muted">Don't have an account?</span>
-            <a href="#" className="text-highlight hover:underline">
+            <a href="#" className="text-primary hover:underline">
               Sign up
             </a>
           </div>
