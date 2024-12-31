@@ -36,8 +36,8 @@ const BlogPost = () => {
 
       <article className="max-w-4xl mx-auto px-6 py-12">
         {/* Category and Date */}
-        <div className="mb-6">
-          <span className="px-3 py-1 bg-highlight text-primary text-sm font-medium rounded-full">
+        <div className="mb-6 flex items-center">
+          <span className="px-4 py-1.5 bg-primary text-surface text-sm font-medium rounded-full">
             {post.category}
           </span>
           <span className="ml-4 text-secondary">
@@ -74,7 +74,7 @@ const BlogPost = () => {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 bg-muted text-secondary text-sm rounded-full"
+                  className="px-3 py-1.5 bg-[#1A1F2C] text-white text-sm font-medium rounded-full hover:bg-[#221F26] transition-colors"
                 >
                   {tag}
                 </span>
