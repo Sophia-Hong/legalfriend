@@ -10,14 +10,14 @@ const Auth = () => {
   const [authView, setAuthView] = useState<"sign_in" | "magic_link">("sign_in");
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#fbfbfd] px-4">
       <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <h2 className="mt-6 text-3xl font-bold text-primary">
-            Welcome to LegalFriend
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-semibold tracking-tight text-primary">
+            Welcome back
           </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Sign in to your account or create a new one
+          <p className="text-base text-muted-foreground">
+            Choose your preferred sign in method
           </p>
         </div>
 
@@ -27,23 +27,23 @@ const Auth = () => {
           </div>
         )}
 
-        <div className="flex justify-center space-x-4 mb-4">
+        <div className="flex justify-center space-x-3">
           <button
             onClick={() => setAuthView("sign_in")}
-            className={`px-4 py-2 text-sm font-medium rounded-md ${
+            className={`flex-1 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 ${
               authView === "sign_in"
-                ? "bg-primary text-white"
-                : "text-primary hover:bg-gray-100"
+                ? "bg-primary text-white shadow-lg shadow-primary/20"
+                : "text-primary hover:bg-gray-100 border border-gray-200"
             }`}
           >
             Email & Password
           </button>
           <button
             onClick={() => setAuthView("magic_link")}
-            className={`px-4 py-2 text-sm font-medium rounded-md ${
+            className={`flex-1 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 ${
               authView === "magic_link"
-                ? "bg-primary text-white"
-                : "text-primary hover:bg-gray-100"
+                ? "bg-primary text-white shadow-lg shadow-primary/20"
+                : "text-primary hover:bg-gray-100 border border-gray-200"
             }`}
           >
             Magic Link
@@ -60,20 +60,73 @@ const Auth = () => {
                   colors: {
                     brand: '#141413',
                     brandAccent: '#141413',
+                    inputBackground: 'white',
+                    inputBorder: '#e5e7eb',
+                    inputBorderHover: '#d1d5db',
+                    inputBorderFocus: '#141413',
+                  },
+                  borderWidths: {
+                    buttonBorderWidth: '1px',
+                    inputBorderWidth: '1px',
+                  },
+                  radii: {
+                    borderRadiusButton: '12px',
+                    buttonBorderRadius: '12px',
+                    inputBorderRadius: '12px',
+                  },
+                  space: {
+                    inputPadding: '12px',
+                    buttonPadding: '12px',
                   },
                 },
               },
               style: {
                 button: {
-                  borderRadius: '6px',
+                  borderRadius: '12px',
+                  height: '44px',
+                  boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+                  textTransform: 'none',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                },
+                input: {
+                  borderRadius: '12px',
+                  height: '44px',
+                  boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+                },
+                message: {
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                },
+                anchor: {
+                  fontSize: '14px',
+                  textDecoration: 'none',
+                  color: '#141413',
+                  fontWeight: '500',
+                },
+                container: {
+                  gap: '16px',
                 },
               },
             }}
-            providers={[]}
+            providers={["google"]}
             view={authView}
             showLinks={true}
             redirectTo={window.location.origin}
           />
+        </div>
+
+        <div className="mt-8 text-center">
+          <p className="text-sm text-muted-foreground">
+            By continuing, you agree to our{" "}
+            <a href="/terms" className="text-primary hover:underline">
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="/privacy" className="text-primary hover:underline">
+              Privacy Policy
+            </a>
+          </p>
         </div>
       </div>
     </div>
