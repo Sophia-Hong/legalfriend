@@ -123,6 +123,10 @@ const Auth = () => {
             view={authView}
             showLinks={false}
             redirectTo={redirectUrl}
+            onError={(error) => {
+              console.error("Auth error:", error);
+              setError(error.message);
+            }}
           />
         </div>
 
