@@ -16,7 +16,7 @@ const Auth = () => {
             Welcome to LegalFriend
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Sign in to your account or create a new one
+            Sign in with magic link or create a new account
           </p>
         </div>
 
@@ -41,6 +41,8 @@ const Auth = () => {
               },
             }}
             providers={[]}
+            view="magic_link"
+            showLinks={false}
             redirectTo={window.location.origin}
           />
         </div>
