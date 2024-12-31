@@ -32,7 +32,7 @@ export const ScrollToTop = () => {
       variant="ghost"
       size="icon"
       onClick={scrollToTop}
-      className="fixed bottom-24 right-4 z-50 rounded-full bg-surface shadow-md hover:bg-accent md:bottom-8 md:right-8"
+      className="fixed bottom-44 right-4 z-50 rounded-full bg-surface shadow-md hover:bg-accent md:bottom-8 md:right-8"
     >
       <ArrowUp className="h-5 w-5" />
     </Button>

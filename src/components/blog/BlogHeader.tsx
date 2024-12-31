@@ -28,7 +28,7 @@ const BlogHeader = ({ post }: BlogHeaderProps) => {
       <Button
         variant="ghost"
         size="icon"
-        className="fixed bottom-20 right-4 z-50 rounded-full bg-surface shadow-md hover:bg-accent md:hidden animate-float"
+        className="fixed bottom-32 right-4 z-50 rounded-full bg-surface shadow-md hover:bg-accent md:hidden animate-float"
         onClick={() => navigate('/blog')}
       >
         <CornerUpLeft className="h-5 w-5" />
