@@ -9,6 +9,9 @@ const Auth = () => {
   const [error, setError] = useState<string | null>(null);
   const [authView, setAuthView] = useState<"sign_in" | "magic_link">("sign_in");
 
+  // Get the current URL's origin for the redirect
+  const redirectUrl = `${window.location.origin}/auth/callback`;
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#fbfbfd] px-4">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-xl">
@@ -119,7 +122,7 @@ const Auth = () => {
             providers={["google"]}
             view={authView}
             showLinks={false}
-            redirectTo={window.location.origin}
+            redirectTo={redirectUrl}
           />
         </div>
 
