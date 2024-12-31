@@ -11,18 +11,18 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#fbfbfd] px-4">
-      <div className="max-w-md w-full space-y-8">
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-xl">
         <div className="text-center space-y-4">
           <h2 className="text-4xl font-semibold tracking-tight text-primary">
             Welcome back
           </h2>
-          <p className="text-base text-muted-foreground">
+          <p className="text-base text-muted">
             Choose your preferred sign in method
           </p>
         </div>
 
         {error && (
-          <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md">
+          <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl">
             {error}
           </div>
         )}
@@ -33,7 +33,7 @@ const Auth = () => {
             className={`flex-1 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 ${
               authView === "sign_in"
                 ? "bg-primary text-white shadow-lg shadow-primary/20"
-                : "text-primary hover:bg-gray-100 border border-gray-200"
+                : "text-primary hover:bg-gray-50 border border-gray-200"
             }`}
           >
             Email & Password
@@ -43,7 +43,7 @@ const Auth = () => {
             className={`flex-1 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 ${
               authView === "magic_link"
                 ? "bg-primary text-white shadow-lg shadow-primary/20"
-                : "text-primary hover:bg-gray-100 border border-gray-200"
+                : "text-primary hover:bg-gray-50 border border-gray-200"
             }`}
           >
             Magic Link
@@ -107,17 +107,24 @@ const Auth = () => {
                 container: {
                   gap: '16px',
                 },
+                divider: {
+                  backgroundColor: '#e5e7eb',
+                },
+                label: {
+                  fontSize: '14px',
+                  color: '#374151',
+                },
               },
             }}
             providers={["google"]}
             view={authView}
-            showLinks={true}
+            showLinks={false}
             redirectTo={window.location.origin}
           />
         </div>
 
         <div className="mt-8 text-center">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted">
             By continuing, you agree to our{" "}
             <a href="/terms" className="text-primary hover:underline">
               Terms of Service
