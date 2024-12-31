@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 const Auth = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
+  const [authView, setAuthView] = useState<"sign_in" | "magic_link">("sign_in");
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
@@ -25,6 +26,29 @@ const Auth = () => {
             {error}
           </div>
         )}
+
+        <div className="flex justify-center space-x-4 mb-4">
+          <button
+            onClick={() => setAuthView("sign_in")}
+            className={`px-4 py-2 text-sm font-medium rounded-md ${
+              authView === "sign_in"
+                ? "bg-primary text-white"
+                : "text-primary hover:bg-gray-100"
+            }`}
+          >
+            Email & Password
+          </button>
+          <button
+            onClick={() => setAuthView("magic_link")}
+            className={`px-4 py-2 text-sm font-medium rounded-md ${
+              authView === "magic_link"
+                ? "bg-primary text-white"
+                : "text-primary hover:bg-gray-100"
+            }`}
+          >
+            Magic Link
+          </button>
+        </div>
 
         <div className="mt-8">
           <SupabaseAuth
@@ -46,7 +70,7 @@ const Auth = () => {
               },
             }}
             providers={[]}
-            view="magic_link"
+            view={authView}
             showLinks={true}
             redirectTo={window.location.origin}
           />
