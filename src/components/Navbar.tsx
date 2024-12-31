@@ -1,12 +1,22 @@
 import { Link } from "react-router-dom";
-import { Menu, UserRound } from "lucide-react";
+import { Menu, UserRound, LogOut } from "lucide-react";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
+  const { user, profile, signOut } = useAuth();
+
   return (
     <nav className="w-full z-50 px-4 sm:px-6 py-3 sm:py-4">
       <div className="max-w-[1200px] mx-auto flex justify-between items-center">
@@ -62,11 +72,37 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* User Icon and Review Button */}
+        {/* User Menu and Review Button */}
         <div className="flex items-center gap-4">
-          <button className="text-primary hover:text-primary/80 transition-colors">
-            <UserRound className="h-5 w-5 sm:h-6 sm:w-6" />
-          </button>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative"
+                >
+                  <UserRound className="h-5 w-5 sm:h-6 sm:w-6" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  className="text-destructive focus:text-destructive cursor-pointer"
+                  onClick={signOut}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link to="/auth">
+              <Button variant="ghost" size="icon">
+                <UserRound className="h-5 w-5 sm:h-6 sm:w-6" />
+              </Button>
+            </Link>
+          )}
+          
           <Link 
             to="/review-contract" 
             className="bg-highlight text-primary px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-sm sm:text-base font-medium hover:bg-highlight/90 transition-colors hidden md:block"
