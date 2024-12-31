@@ -9,6 +9,44 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      analyses: {
+        Row: {
+          benchmarks: Json | null
+          contract_id: string
+          created_at: string
+          id: string
+          insights: Json | null
+          summary: string | null
+          updated_at: string
+        }
+        Insert: {
+          benchmarks?: Json | null
+          contract_id: string
+          created_at?: string
+          id?: string
+          insights?: Json | null
+          summary?: string | null
+          updated_at?: string
+        }
+        Update: {
+          benchmarks?: Json | null
+          contract_id?: string
+          created_at?: string
+          id?: string
+          insights?: Json | null
+          summary?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analyses_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "contracts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blog_posts: {
         Row: {
           category: Database["public"]["Enums"]["blog_category"]
@@ -106,6 +144,272 @@ export type Database = {
         }
         Relationships: []
       }
+      contracts: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_type: string | null
+          file_url: string
+          id: string
+          payment_id: string | null
+          status: Database["public"]["Enums"]["contract_status_enum"]
+          updated_at: string
+          uploaded_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          payment_id?: string | null
+          status?: Database["public"]["Enums"]["contract_status_enum"]
+          updated_at?: string
+          uploaded_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          payment_id?: string | null
+          status?: Database["public"]["Enums"]["contract_status_enum"]
+          updated_at?: string
+          uploaded_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contracts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_contracts_payment_id"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      keytermrevisions: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          keyterm_id: string
+          reason_for_revision: string | null
+          revised_text: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          keyterm_id: string
+          reason_for_revision?: string | null
+          revised_text?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          keyterm_id?: string
+          reason_for_revision?: string | null
+          revised_text?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "keytermrevisions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "keytermrevisions_keyterm_id_fkey"
+            columns: ["keyterm_id"]
+            isOneToOne: false
+            referencedRelation: "keyterms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      keyterms: {
+        Row: {
+          analysis_notes: string | null
+          contract_id: string
+          created_at: string
+          id: string
+          miscellaneous: string | null
+          original_text_snippet: string | null
+          recommended_changes: string | null
+          term_name: string
+          updated_at: string
+        }
+        Insert: {
+          analysis_notes?: string | null
+          contract_id: string
+          created_at?: string
+          id?: string
+          miscellaneous?: string | null
+          original_text_snippet?: string | null
+          recommended_changes?: string | null
+          term_name: string
+          updated_at?: string
+        }
+        Update: {
+          analysis_notes?: string | null
+          contract_id?: string
+          created_at?: string
+          id?: string
+          miscellaneous?: string | null
+          original_text_snippet?: string | null
+          recommended_changes?: string | null
+          term_name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "keyterms_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "contracts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          contract_id: string
+          created_at: string
+          currency: string
+          id: string
+          status: Database["public"]["Enums"]["payment_status_enum"]
+          transaction_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          contract_id: string
+          created_at?: string
+          currency?: string
+          id?: string
+          status?: Database["public"]["Enums"]["payment_status_enum"]
+          transaction_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          contract_id?: string
+          created_at?: string
+          currency?: string
+          id?: string
+          status?: Database["public"]["Enums"]["payment_status_enum"]
+          transaction_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "contracts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          role: Database["public"]["Enums"]["user_role_enum"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id: string
+          role?: Database["public"]["Enums"]["user_role_enum"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role_enum"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      termconversations: {
+        Row: {
+          content: string
+          conversation_id: string | null
+          created_at: string
+          id: string
+          keyterm_id: string | null
+          role: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          conversation_id?: string | null
+          created_at?: string
+          id?: string
+          keyterm_id?: string | null
+          role: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string | null
+          created_at?: string
+          id?: string
+          keyterm_id?: string | null
+          role?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "termconversations_keyterm_id_fkey"
+            columns: ["keyterm_id"]
+            isOneToOne: false
+            referencedRelation: "keyterms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "termconversations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -124,7 +428,10 @@ export type Database = {
         | "processing"
         | "completed"
         | "failed"
+      contract_status_enum: "pending" | "processing" | "completed" | "failed"
+      payment_status_enum: "pending" | "completed" | "failed" | "refunded"
       post_status: "draft" | "published" | "archived"
+      user_role_enum: "normal" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
