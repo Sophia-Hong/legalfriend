@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Auth as SupabaseAuth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 
 const Auth = () => {
-  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [authView, setAuthView] = useState<"sign_in" | "magic_link">("sign_in");
 
@@ -53,6 +51,7 @@ const Auth = () => {
         <div className="mt-8">
           <SupabaseAuth
             supabaseClient={supabase}
+            view={authView}
             appearance={{
               theme: ThemeSupa,
               variables: {
@@ -117,9 +116,8 @@ const Auth = () => {
               },
             }}
             providers={["google"]}
-            view={authView}
+            redirectTo={`${window.location.origin}/auth/callback`}
             showLinks={false}
-            redirectTo={window.location.origin}
           />
         </div>
 
