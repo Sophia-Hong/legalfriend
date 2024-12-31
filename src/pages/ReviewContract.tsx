@@ -1,94 +1,102 @@
 import { useState } from "react";
+import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import FileUploadZone from "@/components/contract/FileUploadZone";
+import EmailCollectionDialog from "@/components/contract/EmailCollectionDialog";
+import { supabase } from "@/integrations/supabase/client";
 
 const ReviewContract = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
   const { toast } = useToast();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-    if (selectedFile) {
-      if (selectedFile.type === "application/pdf") {
-        setFile(selectedFile);
-      } else {
-        toast({
-          title: "Invalid file type",
-          description: "Please upload a PDF file",
-          variant: "destructive",
-        });
-      }
-    }
-  };
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleAnalyze = () => {
     if (!file) {
       toast({
-        title: "No file selected",
-        description: "Please select a file to upload",
         variant: "destructive",
+        title: "Please upload a contract first",
+        description: "Upload your rental agreement to proceed with the analysis.",
       });
       return;
     }
 
-    // TODO: Implement file upload and contract review logic
-    toast({
-      title: "Feature coming soon",
-      description: "Contract review functionality will be implemented soon",
-    });
+    setShowEmailDialog(true);
+  };
+
+  const handleEmailSubmit = async (email: string) => {
+    try {
+      // Upload file to Supabase Storage
+      const fileExt = file!.name.split(".").pop();
+      const filePath = `${crypto.randomUUID()}.${fileExt}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from("contracts")
+        .upload(filePath, file!);
+
+      if (uploadError) throw uploadError;
+
+      // Create contract submission record
+      const { error: dbError } = await supabase
+        .from("contract_submissions")
+        .insert({
+          user_email: email,
+          contract_file_path: filePath,
+        });
+
+      if (dbError) throw dbError;
+
+      toast({
+        title: "Contract uploaded successfully",
+        description: "Redirecting to payment...",
+        duration: 3000, // Auto dismiss after 3 seconds
+      });
+
+      // TODO: Redirect to payment page
+      setShowEmailDialog(false);
+      
+    } catch (error: any) {
+      console.error("Error processing contract:", error);
+      toast({
+        variant: "destructive",
+        title: "Error processing contract",
+        description: error.message,
+      });
+    }
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Review Your Contract</h1>
-      
-      <Card className="max-w-2xl mx-auto p-6">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Upload your contract (PDF only)
-            </label>
-            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md">
-              <div className="space-y-1 text-center">
-                <div className="flex text-sm text-gray-600">
-                  <label
-                    htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary/80"
-                  >
-                    <span>Upload a file</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      className="sr-only"
-                      accept=".pdf"
-                      onChange={handleFileChange}
-                    />
-                  </label>
-                  <p className="pl-1">or drag and drop</p>
-                </div>
-                <p className="text-xs text-gray-500">PDF up to 10MB</p>
-              </div>
-            </div>
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-4xl font-bold text-primary mb-6">
+          Upload Your Contract
+        </h1>
+        <p className="text-secondary mb-8">
+          Upload your rental agreement for a professional review. We'll analyze
+          your contract and provide detailed insights to protect your rights.
+        </p>
+
+        <div className="space-y-8">
+          <FileUploadZone file={file} onFileChange={setFile} />
+
+          <div className="text-center">
+            <Button
+              size="lg"
+              className="bg-highlight text-primary hover:bg-highlight/90 gap-2"
+              onClick={handleAnalyze}
+            >
+              <Sparkles className="w-5 h-5" />
+              Analyze Contract
+            </Button>
           </div>
+        </div>
 
-          {file && (
-            <div className="text-sm text-gray-500">
-              Selected file: {file.name}
-            </div>
-          )}
-
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={!file}
-          >
-            Review Contract
-          </Button>
-        </form>
-      </Card>
+        <EmailCollectionDialog
+          isOpen={showEmailDialog}
+          onClose={() => setShowEmailDialog(false)}
+          onSubmit={handleEmailSubmit}
+        />
+      </div>
     </div>
   );
 };
