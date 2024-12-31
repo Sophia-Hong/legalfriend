@@ -59,11 +59,17 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
         />
         <label htmlFor="terms" className="text-sm text-muted">
           I agree to the{" "}
-          <a href="/terms-and-conditions" className="text-primary hover:underline">
+          <a 
+            href="/terms-and-conditions" 
+            className="text-[#1A1F2C] underline hover:text-primary transition-colors"
+          >
             Terms of Use
           </a>{" "}
           and{" "}
-          <a href="/privacy-policy" className="text-primary hover:underline">
+          <a 
+            href="/privacy-policy" 
+            className="text-[#1A1F2C] underline hover:text-primary transition-colors"
+          >
             Privacy Policy
           </a>
         </label>
