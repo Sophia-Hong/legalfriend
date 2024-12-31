@@ -5,6 +5,8 @@ import { format } from "date-fns";
 import BlogMeta from "@/components/blog/BlogMeta";
 import SocialShare from "@/components/blog/SocialShare";
 import RelatedPosts from "@/components/blog/RelatedPosts";
+import { UserRound } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -49,6 +51,21 @@ const BlogPost = () => {
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-4 sm:mb-6 leading-tight">
           {post.title}
         </h1>
+
+        {/* Author Profile */}
+        {post.author_id && (
+          <div className="flex items-center gap-3 mb-6 p-4 bg-surface rounded-lg border border-primary/10">
+            <Avatar className="h-12 w-12">
+              <AvatarFallback>
+                <UserRound className="h-6 w-6 text-muted" />
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <div className="font-medium text-primary">Legal Friend AI</div>
+              <div className="text-sm text-secondary">Expert in Tenant Rights</div>
+            </div>
+          </div>
+        )}
 
         {/* Featured Image */}
         <div className="relative h-[200px] sm:h-[300px] md:h-[400px] rounded-lg overflow-hidden mb-6 sm:mb-8">

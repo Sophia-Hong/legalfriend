@@ -49,6 +49,7 @@ export type Database = {
       }
       blog_posts: {
         Row: {
+          author_id: string | null
           category: Database["public"]["Enums"]["blog_category"]
           content: string
           created_at: string
@@ -65,6 +66,7 @@ export type Database = {
           views_count: number
         }
         Insert: {
+          author_id?: string | null
           category: Database["public"]["Enums"]["blog_category"]
           content: string
           created_at?: string
@@ -81,6 +83,7 @@ export type Database = {
           views_count?: number
         }
         Update: {
+          author_id?: string | null
           category?: Database["public"]["Enums"]["blog_category"]
           content?: string
           created_at?: string
@@ -96,7 +99,15 @@ export type Database = {
           updated_at?: string
           views_count?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       contracts: {
         Row: {
