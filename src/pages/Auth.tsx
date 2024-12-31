@@ -1,11 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Auth as SupabaseAuth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 
 const Auth = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [authView, setAuthView] = useState<"sign_in" | "magic_link">("sign_in");
+
+  useEffect(() => {
+    // Check if user is already logged in
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        navigate("/");
+      }
+    });
+
+    // Set up auth state listener
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" && session) {
+        navigate("/");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#fbfbfd] px-4">
@@ -118,6 +140,10 @@ const Auth = () => {
             providers={["google"]}
             redirectTo={`${window.location.origin}/auth/callback`}
             showLinks={false}
+            onError={(error) => {
+              console.error('Auth error:', error);
+              setError(error.message);
+            }}
           />
         </div>
 
