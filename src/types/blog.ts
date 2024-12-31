@@ -16,5 +16,4 @@ export interface BlogPost {
   views_count: number;
   created_at: string;
   updated_at: string;
-  author_id: string | null;
 }

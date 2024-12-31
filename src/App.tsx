@@ -1,45 +1,50 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Index from "@/pages/Index";
-import ReviewContract from "@/pages/ReviewContract";
-import BlogPost from "@/pages/BlogPost";
-import ContactUs from "@/pages/ContactUs";
-import FAQ from "@/pages/FAQ";
-import PrivacyPolicy from "@/pages/PrivacyPolicy";
-import TermsAndConditions from "@/pages/TermsAndConditions";
-import UsefulTips from "@/pages/UsefulTips";
-import ScrollToTop from "@/components/ScrollToTop";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import BottomNav from "./components/BottomNav";
+import ScrollToTop from "./components/ScrollToTop";
+import Footer from "./components/Footer";
+import Index from "./pages/Index";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import UsefulTips from "./pages/UsefulTips";
+import BlogPost from "./pages/BlogPost";
+import ReviewContract from "./pages/ReviewContract";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import ContactUs from "./pages/ContactUs";
+import FAQ from "./pages/FAQ";
 
-// Create a client
 const queryClient = new QueryClient();
 
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <ScrollToTop />
-        <div className="flex flex-col min-h-screen">
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <div className="min-h-screen bg-background flex flex-col">
           <Navbar />
-          <main className="flex-grow">
+          <main className="pb-24 md:pb-8 flex-grow">
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/review-contract" element={<ReviewContract />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/useful-tips" element={<UsefulTips />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/review-contract" element={<ReviewContract />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/contact-us" element={<ContactUs />} />
               <Route path="/faq" element={<FAQ />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-              <Route path="/useful-tips" element={<UsefulTips />} />
             </Routes>
           </main>
+          <ScrollToTop />
           <Footer />
+          <BottomNav />
         </div>
-      </Router>
-    </QueryClientProvider>
-  );
-}
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
 
 export default App;
