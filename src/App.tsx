@@ -20,28 +20,6 @@ import FAQ from "./pages/FAQ";
 
 const queryClient = new QueryClient();
 
-// Protected route wrapper
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth();
-  
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
-  
-  return <>{children}</>;
-};
-
-// Admin route wrapper
-const AdminRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAdmin } = useAuth();
-  
-  if (!isAdmin) {
-    return <Navigate to="/" replace />;
-  }
-  
-  return <>{children}</>;
-};
-
 const AppRoutes = () => (
   <div className="min-h-screen bg-background flex flex-col">
     <Navbar />
@@ -52,14 +30,7 @@ const AppRoutes = () => (
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/useful-tips" element={<UsefulTips />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
-        <Route 
-          path="/review-contract" 
-          element={
-            <ProtectedRoute>
-              <ReviewContract />
-            </ProtectedRoute>
-          } 
-        />
+        <Route path="/review-contract" element={<ReviewContract />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/faq" element={<FAQ />} />
