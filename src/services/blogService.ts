@@ -8,8 +8,7 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
       .from('blog_posts')
       .select('*')
       .eq('status', 'published')
-      .order('published_at', { ascending: false })
-      .throwOnError();
+      .order('published_at', { ascending: false });
 
     if (error) {
       console.error("Error fetching blog posts:", error);
