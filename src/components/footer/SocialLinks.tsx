@@ -47,7 +47,7 @@ const SocialLinks = () => {
         aria-label="Visit our Threads profile"
       >
         <img 
-          src="/lovable-uploads/5d2affda-6fbe-4d0e-aa51-b846e53b2f85.png"
+          src="/lovable-uploads/984f40c0-76f3-497b-8579-e9df525724e2.png"
           alt="Threads"
           className="w-5 h-5"
         />
