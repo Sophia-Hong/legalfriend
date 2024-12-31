@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Youtube, Instagram, Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -12,9 +13,59 @@ const Footer = () => {
               </svg>
               <span className="font-medium">LegalFriend</span>
             </div>
-            <p className="text-accent text-sm">
+            <p className="text-accent text-sm mb-6">
               Don't sign what you don't understand. AI-powered lease contract review assistant.
             </p>
+            <div className="flex gap-4">
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-accent hover:text-white transition-colors"
+                aria-label="Visit our Youtube channel"
+              >
+                <Youtube size={20} />
+              </a>
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-accent hover:text-white transition-colors"
+                aria-label="Visit our Instagram profile"
+              >
+                <Instagram size={20} />
+              </a>
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-accent hover:text-white transition-colors"
+                aria-label="Visit our X (Twitter) profile"
+              >
+                <Twitter size={20} />
+              </a>
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-accent hover:text-white transition-colors"
+                aria-label="Visit our Threads profile"
+              >
+                <svg 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 16a6 6 0 1 1 6-6 6 6 0 0 1-6 6z"/>
+                  <path d="M12 8v8M8 12h8"/>
+                </svg>
+              </a>
+            </div>
           </div>
           
           <div>
