@@ -34,13 +34,20 @@ const Auth = () => {
               variables: {
                 default: {
                   colors: {
-                    brand: 'rgb(var(--primary))',
-                    brandAccent: 'rgb(var(--primary))',
+                    brand: '#141413',
+                    brandAccent: '#141413',
                   },
+                },
+              },
+              style: {
+                button: {
+                  borderRadius: '6px',
                 },
               },
             }}
             providers={[]}
+            view="magic_link"
+            showLinks={true}
             redirectTo={window.location.origin}
           />
         </div>
