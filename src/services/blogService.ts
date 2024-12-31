@@ -15,7 +15,6 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
       throw error;
     }
 
-    console.log("Successfully fetched blog posts:", data?.length || 0, "posts");
     return data || [];
   } catch (error) {
     console.error("Error in getBlogPosts:", error);
