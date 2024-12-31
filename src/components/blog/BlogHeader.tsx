@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CornerUpLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { BlogPost } from "@/types/blog";
@@ -28,10 +28,10 @@ const BlogHeader = ({ post }: BlogHeaderProps) => {
       <Button
         variant="ghost"
         size="icon"
-        className="fixed bottom-8 right-4 z-50 rounded-full bg-surface shadow-md hover:bg-accent md:hidden"
+        className="fixed bottom-8 right-4 z-50 rounded-full bg-surface shadow-md hover:bg-accent md:hidden animate-float"
         onClick={() => navigate('/blog')}
       >
-        <ArrowLeft className="h-5 w-5" />
+        <CornerUpLeft className="h-5 w-5" />
       </Button>
 
       <div className="mb-4 sm:mb-6 flex flex-wrap items-center gap-3">
