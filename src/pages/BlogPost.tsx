@@ -2,10 +2,9 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getBlogPost, getRelatedPosts } from "@/services/blogService";
 import { format } from "date-fns";
-import { Helmet } from "react-helmet";
-import { Share2, Facebook, Twitter, Linkedin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import TipCard from "@/components/tips/TipCard";
+import BlogMeta from "@/components/blog/BlogMeta";
+import SocialShare from "@/components/blog/SocialShare";
+import RelatedPosts from "@/components/blog/RelatedPosts";
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -31,59 +30,9 @@ const BlogPost = () => {
     return <div className="max-w-4xl mx-auto px-6 py-12">Post not found</div>;
   }
 
-  // Schema markup for the blog post
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": post.title,
-    "description": post.description,
-    "image": post.image_url,
-    "datePublished": post.published_at,
-    "dateModified": post.updated_at,
-    "articleBody": post.content,
-    "author": {
-      "@type": "Organization",
-      "name": "LegalFriend"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "LegalFriend",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://legalfriend.com/logo.png" // Update with actual logo URL
-      }
-    }
-  };
-
-  const shareUrl = window.location.href;
-  const shareText = `Check out this article: ${post.title}`;
-
-  const handleShare = (platform: string) => {
-    const urls = {
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-      twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
-      linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(post.title)}`
-    };
-    window.open(urls[platform as keyof typeof urls], '_blank');
-  };
-
   return (
     <>
-      <Helmet>
-        <title>{post.title} | LegalFriend Resources</title>
-        <meta name="description" content={post.description} />
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.description} />
-        <meta property="og:image" content={post.image_url} />
-        <meta property="og:url" content={window.location.href} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.description} />
-        <meta name="twitter:image" content={post.image_url} />
-        <script type="application/ld+json">
-          {JSON.stringify(articleSchema)}
-        </script>
-      </Helmet>
+      <BlogMeta post={post} />
 
       <article className="max-w-4xl mx-auto px-6 py-12">
         {/* Category and Date */}
@@ -109,32 +58,7 @@ const BlogPost = () => {
         </div>
 
         {/* Social Share Buttons */}
-        <div className="flex gap-2 mb-8">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleShare('facebook')}
-          >
-            <Facebook className="h-4 w-4 mr-2" />
-            Share
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleShare('twitter')}
-          >
-            <Twitter className="h-4 w-4 mr-2" />
-            Tweet
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleShare('linkedin')}
-          >
-            <Linkedin className="h-4 w-4 mr-2" />
-            Share
-          </Button>
-        </div>
+        <SocialShare url={window.location.href} title={post.title} />
 
         {/* Content */}
         <div 
@@ -160,27 +84,7 @@ const BlogPost = () => {
         )}
 
         {/* Related Posts */}
-        {relatedPosts.length > 0 && (
-          <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {relatedPosts.map((relatedPost) => (
-                <TipCard
-                  key={relatedPost.id}
-                  category={relatedPost.category}
-                  title={relatedPost.title}
-                  description={relatedPost.description}
-                  readTime={relatedPost.read_time}
-                  date={format(
-                    new Date(relatedPost.published_at || relatedPost.created_at),
-                    'MMM d, yyyy'
-                  )}
-                  image={relatedPost.image_url}
-                />
-              ))}
-            </div>
-          </section>
-        )}
+        <RelatedPosts posts={relatedPosts} />
       </article>
     </>
   );
