@@ -140,10 +140,6 @@ const Auth = () => {
             providers={["google"]}
             redirectTo={`${window.location.origin}/auth/callback`}
             showLinks={false}
-            onError={(error) => {
-              console.error('Auth error:', error);
-              setError(error.message);
-            }}
           />
         </div>
 
