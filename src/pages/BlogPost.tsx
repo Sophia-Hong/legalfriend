@@ -1,15 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getBlogPost, getRelatedPosts } from "@/services/blogService";
 import { format } from "date-fns";
 import BlogMeta from "@/components/blog/BlogMeta";
 import SocialShare from "@/components/blog/SocialShare";
 import RelatedPosts from "@/components/blog/RelatedPosts";
-import { UserRound } from "lucide-react";
+import { UserRound, ArrowLeft } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 
 const BlogPost = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   console.log("Fetching blog post with slug:", slug);
 
   const { data: post, isLoading: postLoading } = useQuery({
@@ -37,6 +39,16 @@ const BlogPost = () => {
       <BlogMeta post={post} />
 
       <article className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Back Button */}
+        <Button
+          variant="ghost"
+          className="mb-6 hover:bg-surface flex items-center gap-2 text-secondary hover:text-primary transition-colors"
+          onClick={() => navigate('/blog')}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Blog
+        </Button>
+
         {/* Category and Date */}
         <div className="mb-4 sm:mb-6 flex flex-wrap items-center gap-3">
           <span className="px-3 py-1 bg-surface text-primary text-sm font-medium rounded-full border border-primary/20 hover:border-primary/40 transition-colors">
