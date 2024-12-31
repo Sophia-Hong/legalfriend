@@ -22,7 +22,7 @@ const TipCard = ({ category, title, description, readTime, date, image, slug }: 
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 bg-highlight text-primary text-sm font-medium rounded-full">
+          <span className="px-3 py-1 bg-surface text-primary text-sm font-medium rounded-full border border-primary/20 hover:border-primary/40 transition-colors">
             {category}
           </span>
         </div>
