@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Youtube, Instagram, Twitter } from "lucide-react";
+import { Youtube, Instagram, Twitter, Facebook } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -49,6 +49,15 @@ const Footer = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-accent hover:text-white transition-colors"
+                aria-label="Visit our Facebook page"
+              >
+                <Facebook size={20} />
+              </a>
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-accent hover:text-white transition-colors"
                 aria-label="Visit our Threads profile"
               >
                 <svg 
@@ -61,8 +70,8 @@ const Footer = () => {
                   strokeLinecap="round" 
                   strokeLinejoin="round"
                 >
-                  <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 16a6 6 0 1 1 6-6 6 6 0 0 1-6 6z"/>
-                  <path d="M12 8v8M8 12h8"/>
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15.5c-3.03 0-5.5-2.47-5.5-5.5S8.97 6.5 12 6.5s5.5 2.47 5.5 5.5-2.47 5.5-5.5 5.5z"/>
+                  <path d="M12 7.5v9M7.5 12h9"/>
                 </svg>
               </a>
             </div>
