@@ -48,12 +48,12 @@ const ReviewContract = () => {
 
       toast({
         title: "Contract uploaded successfully",
-        description: "We'll analyze your contract and send the results to your email.",
-        duration: 3000,
+        description: "Redirecting to payment...",
+        duration: 3000, // Auto dismiss after 3 seconds
       });
 
+      // TODO: Redirect to payment page
       setShowEmailDialog(false);
-      setFile(null);
       
     } catch (error: any) {
       console.error("Error processing contract:", error);
