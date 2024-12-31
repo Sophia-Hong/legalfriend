@@ -46,19 +46,11 @@ const SocialLinks = () => {
         className="text-accent hover:text-white transition-colors"
         aria-label="Visit our Threads profile"
       >
-        <svg 
-          width="20" 
-          height="20" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-        >
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15.5c-3.03 0-5.5-2.47-5.5-5.5S8.97 6.5 12 6.5s5.5 2.47 5.5 5.5-2.47 5.5-5.5 5.5z"/>
-          <path d="M12 7.5v9M7.5 12h9"/>
-        </svg>
+        <img 
+          src="/lovable-uploads/5d2affda-6fbe-4d0e-aa51-b846e53b2f85.png"
+          alt="Threads"
+          className="w-5 h-5"
+        />
       </a>
     </div>
   );
