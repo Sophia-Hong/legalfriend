@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getBlogPost, getRelatedPosts } from "@/services/blogService";
 import { format } from "date-fns";
 import { Helmet } from "react-helmet";
-import { Share2, Facebook, Twitter, LinkedIn } from "lucide-react";
+import { Share2, Facebook, Twitter, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TipCard from "@/components/tips/TipCard";
 
@@ -131,7 +131,7 @@ const BlogPost = () => {
             size="sm"
             onClick={() => handleShare('linkedin')}
           >
-            <LinkedIn className="h-4 w-4 mr-2" />
+            <Linkedin className="h-4 w-4 mr-2" />
             Share
           </Button>
         </div>
