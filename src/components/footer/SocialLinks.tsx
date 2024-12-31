@@ -10,7 +10,7 @@ const SocialLinks = () => {
         className="text-accent hover:text-white transition-colors"
         aria-label="Visit our Youtube channel"
       >
-        <Youtube size={20} strokeWidth={1.5} />
+        <Youtube size={20} />
       </a>
       <a 
         href="#" 
@@ -19,7 +19,7 @@ const SocialLinks = () => {
         className="text-accent hover:text-white transition-colors"
         aria-label="Visit our Instagram profile"
       >
-        <Instagram size={20} strokeWidth={1.5} />
+        <Instagram size={20} />
       </a>
       <a 
         href="#" 
@@ -28,7 +28,7 @@ const SocialLinks = () => {
         className="text-accent hover:text-white transition-colors"
         aria-label="Visit our X (Twitter) profile"
       >
-        <Twitter size={20} strokeWidth={1.5} />
+        <Twitter size={20} />
       </a>
       <a 
         href="#" 
@@ -37,7 +37,7 @@ const SocialLinks = () => {
         className="text-accent hover:text-white transition-colors"
         aria-label="Visit our Facebook page"
       >
-        <Facebook size={20} strokeWidth={1.5} />
+        <Facebook size={20} />
       </a>
       <a 
         href="#" 
