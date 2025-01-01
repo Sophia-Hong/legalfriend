@@ -1,10 +1,11 @@
-import { UserPlus } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import SignUpForm from "@/components/auth/SignUpForm";
 import SocialLogin from "@/components/auth/SocialLogin";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, UserPlus } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from "@/components/Navbar";
+import BottomNav from "@/components/BottomNav";
 
 const SignUp = () => {
   const { toast } = useToast();
@@ -41,7 +42,7 @@ const SignUp = () => {
 
   return (
     <>
-      {/* Top Bar */}
+      <Navbar />
       <div className="flex items-center p-4 border-b">
         <button
           onClick={() => navigate(-1)}
@@ -51,7 +52,7 @@ const SignUp = () => {
         </button>
       </div>
 
-      <div className="container max-w-lg mx-auto px-4 py-8">
+      <div className="container max-w-lg mx-auto px-4 py-8 mb-20">
         <div className="space-y-6">
           <div className="flex flex-col items-center space-y-2">
             <div className="rounded-full bg-surface p-3">
@@ -64,8 +65,16 @@ const SignUp = () => {
           <SignUpForm onSubmit={handleSubmit} isLoading={isLoading} />
           
           <SocialLogin onGoogleLogin={handleGoogleSignUp} />
+
+          <div className="text-center space-x-1 text-sm">
+            <span className="text-muted">Already have an account?</span>
+            <Link to="/login" className="text-primary hover:underline">
+              Sign in
+            </Link>
+          </div>
         </div>
       </div>
+      <BottomNav />
     </>
   );
 };
