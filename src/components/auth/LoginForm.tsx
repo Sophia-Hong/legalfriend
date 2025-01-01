@@ -14,33 +14,33 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
-      <div className="space-y-2">
+    <form onSubmit={onSubmit} className="space-y-6">
+      <div className="space-y-4">
         <div className="relative">
-          <Mail className="absolute left-4 top-2.5 h-5 w-5 text-muted" />
+          <Mail className="absolute left-4 top-3.5 h-5 w-5 text-muted" />
           <Input
             id="email"
             placeholder="name@example.com"
             type="email"
             required
-            className="pl-12 pr-4 py-2"
+            className="pl-12 pr-4 py-3 h-12"
           />
         </div>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-4">
         <div className="relative">
-          <Lock className="absolute left-4 top-2.5 h-5 w-5 text-muted" />
+          <Lock className="absolute left-4 top-3.5 h-5 w-5 text-muted" />
           <Input
             id="password"
             type={showPassword ? "text" : "password"}
             required
-            className="pl-12 pr-12 py-2"
+            className="pl-12 pr-12 py-3 h-12"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-2.5 text-muted hover:text-primary"
+            className="absolute right-4 top-3.5 text-muted hover:text-primary"
           >
             {showPassword ? (
               <EyeOff className="h-5 w-5" />
@@ -51,7 +51,7 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
         </div>
       </div>
 
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 pt-2">
         <input
           type="checkbox"
           id="terms"
@@ -79,7 +79,7 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
       <Button
         type="submit"
         className={cn(
-          "w-full bg-accent text-primary hover:bg-accent/90 py-2 px-6",
+          "w-full bg-accent text-primary hover:bg-accent/90 py-3 h-12 mt-4",
           isLoading && "opacity-50 cursor-not-allowed"
         )}
         disabled={isLoading}
