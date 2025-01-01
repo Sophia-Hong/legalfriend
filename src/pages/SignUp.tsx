@@ -2,7 +2,6 @@ import { UserPlus } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import SignUpForm from "@/components/auth/SignUpForm";
-import SocialLogin from "@/components/auth/SocialLogin";
 
 const SignUp = () => {
   const { toast } = useToast();
@@ -29,13 +28,6 @@ const SignUp = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    toast({
-      title: "Coming soon",
-      description: "Google sign-in will be implemented soon",
-    });
-  };
-
   return (
     <div className="container max-w-lg mx-auto px-4 py-8">
       <div className="space-y-6">
@@ -55,8 +47,6 @@ const SignUp = () => {
             Sign in
           </a>
         </div>
-
-        <SocialLogin onGoogleLogin={handleGoogleLogin} />
       </div>
     </div>
   );

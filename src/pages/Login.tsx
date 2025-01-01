@@ -1,8 +1,8 @@
-import { UserRound } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import LoginForm from "@/components/auth/LoginForm";
 import SocialLogin from "@/components/auth/SocialLogin";
+import { LogIn } from "lucide-react";
 
 const Login = () => {
   const { toast } = useToast();
@@ -41,13 +41,21 @@ const Login = () => {
       <div className="space-y-6">
         <div className="flex flex-col items-center space-y-2">
           <div className="rounded-full bg-surface p-3">
-            <UserRound className="h-6 w-6 text-primary" />
+            <LogIn className="h-6 w-6 text-primary" />
           </div>
           <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
-          <p className="text-sm text-muted">Enter your credentials to continue</p>
+          <p className="text-sm text-muted">Sign in to your account</p>
         </div>
 
         <LoginForm onSubmit={handleSubmit} isLoading={isLoading} />
+        
+        <div className="text-center space-x-1 text-sm">
+          <span className="text-muted">Don't have an account?</span>
+          <a href="/signup" className="text-primary hover:underline">
+            Sign up
+          </a>
+        </div>
+
         <SocialLogin onGoogleLogin={handleGoogleLogin} />
       </div>
     </div>
