@@ -7,9 +7,9 @@ interface SocialLoginProps {
 
 const SocialLogin = ({ onGoogleLogin }: SocialLoginProps) => {
   return (
-    <div className="space-y-3 mt-4">
+    <div className="space-y-3 mt-6">
       <div className="relative">
-        <Separator className="my-3" />
+        <Separator className="my-4" />
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="bg-surface px-2 text-xs text-muted uppercase tracking-wider">OR</span>
         </div>
