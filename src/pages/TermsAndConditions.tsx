@@ -1,11 +1,21 @@
-import { FileText, Shield, Info, User, Lock } from "lucide-react";
+import { FileText, Shield, Info, User, Lock, ArrowLeft } from "lucide-react";
 import { Introduction } from "@/components/terms/Introduction";
 import { TermsSection } from "@/components/terms/TermsSection";
+import { useNavigate } from "react-router-dom";
 
 const TermsAndConditions = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-surface">
       <div className="max-w-4xl mx-auto px-6 py-16">
+        <button 
+          onClick={() => navigate(-1)} 
+          className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8"
+        >
+          <ArrowLeft className="h-5 w-5" />
+          <span>Go back</span>
+        </button>
         <Introduction />
         <div className="space-y-8">
           <TermsSection icon={FileText} title="Acceptance of Terms" number="1">

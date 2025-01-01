@@ -1,14 +1,24 @@
-import { User, Info, Lock, Shield, FileText } from "lucide-react";
+import { User, Info, Lock, Shield, FileText, ArrowLeft } from "lucide-react";
 import { Introduction } from "@/components/privacy/Introduction";
 import { InformationCollection } from "@/components/privacy/InformationCollection";
 import { DataUsage } from "@/components/privacy/DataUsage";
 import { ContactInfo } from "@/components/privacy/ContactInfo";
 import { PrivacySection } from "@/components/privacy/PrivacySection";
+import { useNavigate } from "react-router-dom";
 
 const PrivacyPolicy = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-surface">
       <div className="max-w-4xl mx-auto px-6 py-16">
+        <button 
+          onClick={() => navigate(-1)} 
+          className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8"
+        >
+          <ArrowLeft className="h-5 w-5" />
+          <span>Go back</span>
+        </button>
         <Introduction />
         <div className="space-y-8">
           <InformationCollection />
