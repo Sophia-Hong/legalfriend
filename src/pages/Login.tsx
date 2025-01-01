@@ -66,9 +66,12 @@ const Login = () => {
 
           <div className="px-4">
             <LoginForm onSubmit={handleSubmit} isLoading={isLoading} />
-            <div className="mt-2 text-sm">
+            <div className="mt-2 text-sm flex justify-between items-center">
               <Link to="/forgot-password" className="text-primary hover:underline">
                 Forgot password?
+              </Link>
+              <Link to="/signup" className="text-primary hover:underline">
+                Sign up
               </Link>
             </div>
             <SocialLogin onGoogleLogin={handleGoogleLogin} />
