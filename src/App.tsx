@@ -20,7 +20,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const showBackButton = location.pathname !== "/";
+  const showBackButton = location.pathname !== "/" && location.pathname !== "/useful-tips";
 
   return (
     <div className="min-h-screen flex flex-col">
