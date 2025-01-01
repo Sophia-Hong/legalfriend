@@ -25,7 +25,7 @@ const SocialLogin = ({ onGoogleLogin }: SocialLoginProps) => {
           alt="Google"
           className="mr-2 h-4 w-4"
         />
-        Continue with Google
+        Log in with Google
       </Button>
     </div>
   );
