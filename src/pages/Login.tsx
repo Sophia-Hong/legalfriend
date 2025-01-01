@@ -40,7 +40,7 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-surface">
       <div className="container max-w-lg mx-auto px-6 py-8">
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex flex-col items-center space-y-2">
             <div className="rounded-full bg-surface p-3">
               <LogIn className="h-6 w-6 text-primary" />

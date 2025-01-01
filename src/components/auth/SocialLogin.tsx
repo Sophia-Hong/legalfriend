@@ -7,17 +7,17 @@ interface SocialLoginProps {
 
 const SocialLogin = ({ onGoogleLogin }: SocialLoginProps) => {
   return (
-    <div className="space-y-4 mt-6 px-2">
+    <div className="space-y-3 mt-4">
       <div className="relative">
-        <Separator className="my-4" />
+        <Separator className="my-3" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="bg-surface px-2 text-xs text-muted">OR</span>
+          <span className="bg-surface px-2 text-xs text-muted uppercase tracking-wider">OR</span>
         </div>
       </div>
 
       <Button
         variant="outline"
-        className="w-full py-2 px-6"
+        className="w-full py-2 px-6 h-12 border-2"
         onClick={onGoogleLogin}
       >
         <img
