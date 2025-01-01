@@ -15,6 +15,7 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
       throw error;
     }
 
+    console.log("Successfully fetched blog posts:", data);
     return data || [];
   } catch (error) {
     console.error("Error in getBlogPosts:", error);
@@ -30,20 +31,19 @@ export const getBlogPost = async (slug: string): Promise<BlogPost | null> => {
       .select('*, author:profiles(*)')
       .eq('slug', slug)
       .eq('status', 'published')
-      .single();
+      .maybeSingle();
 
     if (error) {
-      if (error.code === 'PGRST116') {
-        console.log("Blog post not found:", slug);
-        return null;
-      }
       console.error("Error fetching blog post:", error);
       throw error;
     }
 
     if (!data) {
+      console.log("Blog post not found:", slug);
       return null;
     }
+
+    console.log("Successfully fetched blog post:", data);
 
     // Increment view count
     const { error: updateError } = await supabase
@@ -78,6 +78,7 @@ export const getRelatedPosts = async (category: string, currentPostId: string): 
       throw error;
     }
 
+    console.log("Successfully fetched related posts:", data);
     return data || [];
   } catch (error) {
     console.error("Error in getRelatedPosts:", error);
