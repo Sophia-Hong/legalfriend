@@ -68,7 +68,7 @@ const ReviewContract = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-4xl font-bold text-primary mb-6">
+        <h1 className="text-4xl font-bold text-primary mb-6 text-center">
           Upload Your Contract
         </h1>
         <p className="text-secondary mb-8">
