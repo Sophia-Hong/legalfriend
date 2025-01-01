@@ -6,7 +6,7 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
   try {
     const { data, error } = await supabase
       .from('blog_posts')
-      .select('*')
+      .select('*, author:profiles(*)')
       .eq('status', 'published')
       .order('published_at', { ascending: false });
 
@@ -22,19 +22,27 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
   }
 };
 
-export const getBlogPost = async (slug: string): Promise<BlogPost> => {
+export const getBlogPost = async (slug: string): Promise<BlogPost | null> => {
   console.log("Fetching single blog post with slug:", slug);
   try {
     const { data, error } = await supabase
       .from('blog_posts')
-      .select('*')
+      .select('*, author:profiles(*)')
       .eq('slug', slug)
       .eq('status', 'published')
       .single();
 
     if (error) {
+      if (error.code === 'PGRST116') {
+        console.log("Blog post not found:", slug);
+        return null;
+      }
       console.error("Error fetching blog post:", error);
       throw error;
+    }
+
+    if (!data) {
+      return null;
     }
 
     // Increment view count
@@ -59,7 +67,7 @@ export const getRelatedPosts = async (category: string, currentPostId: string): 
   try {
     const { data, error } = await supabase
       .from('blog_posts')
-      .select('*')
+      .select('*, author:profiles(*)')
       .eq('status', 'published')
       .eq('category', category)
       .neq('id', currentPostId)
