@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface LoginFormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
