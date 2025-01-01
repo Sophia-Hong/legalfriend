@@ -2,16 +2,12 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import LoginForm from "@/components/auth/LoginForm";
 import SocialLogin from "@/components/auth/SocialLogin";
-import { LogIn, ArrowLeft } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import Navbar from "@/components/Navbar";
-import BottomNav from "@/components/BottomNav";
-import { Button } from "@/components/ui/button";
+import { LogIn } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,18 +39,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-surface">
-      <Navbar />
-      
       <div className="container max-w-lg mx-auto px-6 py-8">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => navigate(-1)}
-          className="mb-6"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-
         <div className="space-y-6">
           <div className="flex flex-col items-center space-y-2">
             <div className="rounded-full bg-surface p-3">
@@ -78,8 +63,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-
-      <BottomNav />
     </div>
   );
 };

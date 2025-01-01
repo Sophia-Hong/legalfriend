@@ -2,15 +2,12 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import SignUpForm from "@/components/auth/SignUpForm";
 import SocialLogin from "@/components/auth/SocialLogin";
-import { ArrowLeft, UserPlus } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import Navbar from "@/components/Navbar";
-import BottomNav from "@/components/BottomNav";
+import { UserPlus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,41 +38,28 @@ const SignUp = () => {
   };
 
   return (
-    <>
-      <Navbar />
-      <div className="flex items-center p-4 border-b">
-        <button
-          onClick={() => navigate(-1)}
-          className="text-primary hover:text-primary/80 transition-colors"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </button>
-      </div>
-
-      <div className="container max-w-lg mx-auto px-4 py-8 mb-20">
-        <div className="space-y-6">
-          <div className="flex flex-col items-center space-y-2">
-            <div className="rounded-full bg-surface p-3">
-              <UserPlus className="h-6 w-6 text-primary" />
-            </div>
-            <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
-            <p className="text-sm text-muted">Enter your details to get started</p>
+    <div className="container max-w-lg mx-auto px-4 py-8 mb-20">
+      <div className="space-y-6">
+        <div className="flex flex-col items-center space-y-2">
+          <div className="rounded-full bg-surface p-3">
+            <UserPlus className="h-6 w-6 text-primary" />
           </div>
+          <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
+          <p className="text-sm text-muted">Enter your details to get started</p>
+        </div>
 
-          <SignUpForm onSubmit={handleSubmit} isLoading={isLoading} />
-          
-          <SocialLogin onGoogleLogin={handleGoogleSignUp} />
+        <SignUpForm onSubmit={handleSubmit} isLoading={isLoading} />
+        
+        <SocialLogin onGoogleLogin={handleGoogleSignUp} />
 
-          <div className="text-center space-x-1 text-sm">
-            <span className="text-muted">Already have an account?</span>
-            <Link to="/login" className="text-primary hover:underline">
-              Sign in
-            </Link>
-          </div>
+        <div className="text-center space-x-1 text-sm">
+          <span className="text-muted">Already have an account?</span>
+          <Link to="/login" className="text-primary hover:underline">
+            Sign in
+          </Link>
         </div>
       </div>
-      <BottomNav />
-    </>
+    </div>
   );
 };
 
