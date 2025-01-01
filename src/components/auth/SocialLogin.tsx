@@ -27,13 +27,6 @@ const SocialLogin = ({ onGoogleLogin }: SocialLoginProps) => {
         />
         Continue with Google
       </Button>
-
-      <div className="text-center space-x-1 text-sm">
-        <span className="text-muted">Don't have an account?</span>
-        <a href="#" className="text-primary hover:underline">
-          Sign up
-        </a>
-      </div>
     </div>
   );
 };
