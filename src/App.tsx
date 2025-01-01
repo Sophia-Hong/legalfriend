@@ -13,6 +13,7 @@ import { Toaster } from "@/components/ui/toaster";
 import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import BottomNav from "./components/BottomNav";
+import Footer from "./components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -39,6 +40,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <main className="flex-1 pb-20 md:pb-0">
         {children}
       </main>
+      <Footer />
       <BottomNav />
     </div>
   );
