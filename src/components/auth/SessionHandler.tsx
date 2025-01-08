@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import PendingContractHandler from "./PendingContractHandler";
 
@@ -7,17 +7,18 @@ interface SessionHandlerProps {
 }
 
 const SessionHandler = ({ onSuccess }: SessionHandlerProps) => {
+  const [session, setSession] = useState<any>(null);
+
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         console.log("Active session found, processing pending contract");
+        setSession(session);
       }
     };
     checkSession();
   }, []);
-
-  const { data: { session } } = await supabase.auth.getSession();
 
   if (!session) return null;
 

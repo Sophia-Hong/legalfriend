@@ -14,6 +14,35 @@ const SignUp = () => {
   const { redirectToReviewContract } = useAuthRedirect();
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleSubmit = async (email: string, password: string) => {
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/review-contract`
+        }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Please check your email to verify your account.",
+      });
+    } catch (error) {
+      const authError = error as AuthError;
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: authError.message,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleGoogleSignUp = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
