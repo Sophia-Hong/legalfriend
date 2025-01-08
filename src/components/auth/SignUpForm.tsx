@@ -1,114 +1,60 @@
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { AuthError } from "@supabase/supabase-js";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { Label } from "@/components/ui/label";
 
 interface SignUpFormProps {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  onSubmit: (email: string, password: string) => Promise<void>;
   isLoading: boolean;
 }
 
 const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await onSubmit(email, password);
+    } catch (error) {
+      const authError = error as AuthError;
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: authError.message,
+      });
+    }
+  };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
-      <div className="space-y-4">
-        <div className="relative">
-          <Mail className="absolute left-3 top-3.5 h-5 w-5 text-muted" />
-          <Input
-            id="email"
-            placeholder="name@example.com"
-            type="email"
-            required
-            className="pl-10 py-3 h-12"
-          />
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <div className="relative">
-          <Lock className="absolute left-3 top-3.5 h-5 w-5 text-muted" />
-          <Input
-            id="password"
-            type={showPassword ? "text" : "password"}
-            placeholder="Create password"
-            required
-            className="pl-10 pr-10 py-3 h-12"
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-3.5 text-muted hover:text-primary"
-          >
-            {showPassword ? (
-              <EyeOff className="h-5 w-5" />
-            ) : (
-              <Eye className="h-5 w-5" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <div className="relative">
-          <Lock className="absolute left-3 top-3.5 h-5 w-5 text-muted" />
-          <Input
-            id="confirmPassword"
-            type={showConfirmPassword ? "text" : "password"}
-            placeholder="Confirm password"
-            required
-            className="pl-10 pr-10 py-3 h-12"
-          />
-          <button
-            type="button"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3 top-3.5 text-muted hover:text-primary"
-          >
-            {showConfirmPassword ? (
-              <EyeOff className="h-5 w-5" />
-            ) : (
-              <Eye className="h-5 w-5" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      <div className="flex items-center space-x-2 pt-2">
-        <input
-          type="checkbox"
-          id="terms"
-          className="rounded border-muted"
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <label htmlFor="terms" className="text-sm text-muted">
-          I agree to the{" "}
-          <a 
-            href="/terms-and-conditions" 
-            className="text-[#1A1F2C] underline hover:text-primary transition-colors"
-          >
-            Terms of Use
-          </a>{" "}
-          and{" "}
-          <a 
-            href="/privacy-policy" 
-            className="text-[#1A1F2C] underline hover:text-primary transition-colors"
-          >
-            Privacy Policy
-          </a>
-        </label>
       </div>
-
-      <Button
-        type="submit"
-        className={cn(
-          "w-full bg-accent text-primary hover:bg-accent/90 py-3 h-12 mt-4",
-          isLoading && "opacity-50 cursor-not-allowed"
-        )}
-        disabled={isLoading}
-      >
+      <div className="space-y-2">
+        <Label htmlFor="password">Password</Label>
+        <Input
+          id="password"
+          type="password"
+          placeholder="Create a password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </div>
+      <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? "Creating account..." : "Create account"}
       </Button>
     </form>
