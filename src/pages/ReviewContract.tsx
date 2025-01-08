@@ -74,7 +74,7 @@ const ReviewContract = () => {
           file_type: freshFile.type,
           file_url: filePath,
           status: 'pending',
-          user_id: session.user.id  // Add the user_id here
+          user_id: session.user.id
         })
         .select()
         .single();
@@ -82,6 +82,16 @@ const ReviewContract = () => {
       if (contractError) throw contractError;
 
       console.log("Contract record created:", contract);
+
+      // Create initial analysis record
+      const { error: analysisError } = await supabase
+        .from("analyses")
+        .insert({
+          contract_id: contract.id,
+          status: 'pending'
+        });
+
+      if (analysisError) throw analysisError;
 
       // Trigger validation
       const { error: functionError } = await supabase.functions.invoke('validate-contract', {
