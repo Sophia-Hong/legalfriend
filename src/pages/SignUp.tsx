@@ -16,7 +16,7 @@ const SignUp = () => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate('/');
+        navigate('/review-contract');
       }
     };
     checkSession();
@@ -67,7 +67,7 @@ const SignUp = () => {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${window.location.origin}/review-contract`,
         },
       });
 
@@ -79,7 +79,7 @@ const SignUp = () => {
           title: "Success",
           description: "Please check your email to verify your account",
         });
-        navigate('/login');
+        navigate('/review-contract');
       }
     } catch (error) {
       const authError = error as AuthError;
@@ -99,7 +99,7 @@ const SignUp = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: `${window.location.origin}/review-contract`
         }
       });
 

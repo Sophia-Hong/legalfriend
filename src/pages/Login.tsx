@@ -17,7 +17,7 @@ const Login = () => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate("/");
+        navigate("/review-contract");
       }
     };
     checkSession();
@@ -66,7 +66,7 @@ const Login = () => {
           title: "Success",
           description: "Successfully logged in",
         });
-        navigate("/");
+        navigate("/review-contract");
       }
     } catch (error) {
       const authError = error as AuthError;
@@ -87,7 +87,7 @@ const Login = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: `${window.location.origin}/review-contract`
         }
       });
 
