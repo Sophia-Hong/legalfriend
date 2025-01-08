@@ -2,65 +2,35 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useFileValidation } from "./useFileValidation";
+import { useAuthState } from "./useAuthState";
 
 export const useContractUpload = () => {
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { validateFile } = useFileValidation();
+  const { isAuthenticated, handleUnauthenticatedUpload } = useAuthState();
 
   const handleAnalyze = async () => {
-    if (!file) {
-      toast({
-        variant: "destructive",
-        title: "Please upload a contract first",
-        description: "Upload your rental agreement to proceed with the analysis.",
-      });
-      return;
-    }
-
-    // Check file type
-    const fileType = file.type;
-    const isValidType = fileType === "application/pdf" || 
-                       fileType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-    
-    if (!isValidType) {
-      toast({
-        variant: "destructive",
-        title: "Invalid file type",
-        description: "Please upload a PDF or DOCX file.",
-      });
-      return;
-    }
+    if (!validateFile(file)) return;
+    if (!file) return;
 
     // Check authentication
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (!session) {
-      // Store file in localStorage before redirecting
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target?.result) {
-          localStorage.setItem('pendingContract', JSON.stringify({
-            name: file.name,
-            type: file.type,
-            data: e.target.result
-          }));
-        }
-      };
-      reader.readAsDataURL(file);
-      
-      // Redirect to signup instead of login for new users
-      navigate('/signup');
+    if (!isAuthenticated) {
+      handleUnauthenticatedUpload(file);
       return;
     }
 
     setIsUploading(true);
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('*')
-        .eq('id', session.user.id)
+        .eq('id', session!.user.id)
         .maybeSingle();
 
       if (profileError || !profile) {
