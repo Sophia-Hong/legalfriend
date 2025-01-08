@@ -7,21 +7,27 @@ import { useSignUp } from "@/hooks/useSignUp";
 import SignUpForm from "@/components/auth/SignUpForm";
 import SocialLogin from "@/components/auth/SocialLogin";
 import PendingContractHandler from "@/components/auth/PendingContractHandler";
+import { useToast } from "@/hooks/use-toast";
+import { AuthError } from "@supabase/supabase-js";
 
 const SignUp = () => {
   const { redirectToReviewContract } = useAuthRedirect();
   const { isLoading, handleSignUp } = useSignUp();
+  const { toast } = useToast();
 
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         console.log("Active session found, processing pending contract");
-        handlePendingContract(session.user.id);
+        return <PendingContractHandler 
+          userId={session.user.id} 
+          onSuccess={redirectToReviewContract} 
+        />;
       }
     };
     checkSession();
-  }, []);
+  }, [redirectToReviewContract]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,7 +48,10 @@ const SignUp = () => {
     
     const user = await handleSignUp(email, password);
     if (user) {
-      handlePendingContract(user.id);
+      return <PendingContractHandler 
+        userId={user.id} 
+        onSuccess={redirectToReviewContract} 
+      />;
     }
   };
 
