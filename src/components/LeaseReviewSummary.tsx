@@ -54,6 +54,23 @@ const LeaseReviewSummary = () => {
     );
   }
 
+  if (!analysis) {
+    return (
+      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-12 md:py-24 bg-[#F1F0FB]">
+        <Card className="w-full bg-white shadow-xl border border-accent/20">
+          <CardContent className="p-4 md:p-8 text-center">
+            <p className="text-secondary mb-4">No analysis available yet</p>
+            <Link to="/review-contract">
+              <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors">
+                Start Your First Review
+              </button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-12 md:py-24 bg-[#F1F0FB]">
       <Card className="w-full bg-white shadow-xl border border-accent/20 hover:shadow-2xl transition-shadow duration-300">
