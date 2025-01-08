@@ -1,75 +1,30 @@
-import { useState, useEffect } from "react";
-import { useToast } from "@/hooks/use-toast";
-import SignUpForm from "@/components/auth/SignUpForm";
-import SocialLogin from "@/components/auth/SocialLogin";
+import { useEffect } from "react";
 import { UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { AuthError } from "@supabase/supabase-js";
 import { useAuthRedirect } from "@/hooks/useAuthRedirect";
+import { useSignUp } from "@/hooks/useSignUp";
+import SignUpForm from "@/components/auth/SignUpForm";
+import SocialLogin from "@/components/auth/SocialLogin";
+import PendingContractHandler from "@/components/auth/PendingContractHandler";
 
 const SignUp = () => {
-  const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
   const { redirectToReviewContract } = useAuthRedirect();
+  const { isLoading, handleSignUp } = useSignUp();
 
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
+        console.log("Active session found, processing pending contract");
         handlePendingContract(session.user.id);
       }
     };
     checkSession();
   }, []);
 
-  const handlePendingContract = async (userId: string) => {
-    const pendingContractStr = localStorage.getItem('pendingContract');
-    if (!pendingContractStr) return;
-
-    try {
-      const pendingContract = JSON.parse(pendingContractStr);
-      const response = await fetch(pendingContract.data);
-      const blob = await response.blob();
-      const file = new File([blob], pendingContract.name, { type: pendingContract.type });
-
-      const fileExt = file.name.split(".").pop();
-      const filePath = `${crypto.randomUUID()}.${fileExt}`;
-      
-      const { error: uploadError } = await supabase.storage
-        .from("contracts")
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { error: contractError } = await supabase
-        .from("contracts")
-        .insert({
-          file_name: file.name,
-          file_type: file.type,
-          file_url: filePath,
-          status: 'pending',
-          user_id: userId
-        });
-
-      if (contractError) throw contractError;
-
-      localStorage.removeItem('pendingContract');
-      redirectToReviewContract();
-      
-    } catch (error) {
-      console.error("Error processing pending contract:", error);
-      toast({
-        variant: "destructive",
-        title: "Error processing contract",
-        description: "Failed to process your contract. Please try uploading it again.",
-      });
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
     
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
@@ -82,41 +37,12 @@ const SignUp = () => {
         title: "Error",
         description: "Passwords do not match",
       });
-      setIsLoading(false);
       return;
     }
     
-    try {
-      console.log("Attempting to sign up with:", { email });
-      
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/review-contract`,
-        },
-      });
-
-      if (error) throw error;
-
-      if (data.user) {
-        console.log("Signup successful:", data.user);
-        toast({
-          title: "Success",
-          description: "Please check your email to verify your account",
-        });
-        await handlePendingContract(data.user.id);
-      }
-    } catch (error) {
-      const authError = error as AuthError;
-      console.error("Signup error:", authError);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: authError.message,
-      });
-    } finally {
-      setIsLoading(false);
+    const user = await handleSignUp(email, password);
+    if (user) {
+      handlePendingContract(user.id);
     }
   };
 
