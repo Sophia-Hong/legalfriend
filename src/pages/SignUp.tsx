@@ -1,40 +1,117 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import SignUpForm from "@/components/auth/SignUpForm";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { UserPlus } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { AuthError, AuthApiError } from "@supabase/supabase-js";
 
 const SignUp = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate('/');
+      }
+    };
+    checkSession();
+  }, [navigate]);
+
+  const getErrorMessage = (error: AuthError) => {
+    console.log("Auth error details:", error);
+    
+    if (error instanceof AuthApiError) {
+      switch (error.status) {
+        case 400:
+          if (error.message.includes("already registered")) {
+            return "This email is already registered. Please try signing in instead.";
+          }
+          break;
+        case 422:
+          return "Invalid email format. Please enter a valid email address.";
+        case 429:
+          return "Too many signup attempts. Please try again later.";
+      }
+    }
+    return error.message || "An error occurred during sign up. Please try again.";
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     
-    try {
-      // TODO: Implement signup logic with Supabase
-      toast({
-        title: "Coming soon",
-        description: "Sign up functionality will be implemented soon",
-      });
-    } catch (error) {
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+
+    if (password !== confirmPassword) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Something went wrong. Please try again.",
+        description: "Passwords do not match",
+      });
+      setIsLoading(false);
+      return;
+    }
+    
+    try {
+      console.log("Attempting to sign up with:", { email });
+      
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        console.log("Signup successful:", data.user);
+        toast({
+          title: "Success",
+          description: "Please check your email to verify your account",
+        });
+        navigate('/login');
+      }
+    } catch (error) {
+      const authError = error as AuthError;
+      console.error("Signup error:", authError);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: getErrorMessage(authError),
       });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleGoogleSignUp = () => {
-    toast({
-      title: "Coming soon",
-      description: "Google sign-up will be implemented soon",
-    });
+  const handleGoogleSignUp = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+
+      if (error) throw error;
+    } catch (error) {
+      const authError = error as AuthError;
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: getErrorMessage(authError),
+      });
+    }
   };
 
   return (
