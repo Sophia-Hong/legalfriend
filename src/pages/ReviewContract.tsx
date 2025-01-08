@@ -25,22 +25,27 @@ const ReviewContract = () => {
 
     setIsUploading(true);
     try {
+      // Create a new File object to ensure we have a fresh stream
+      const freshFile = new File([file], file.name, { type: file.type });
+      
       // Upload file to Supabase Storage
-      const fileExt = file.name.split(".").pop();
+      const fileExt = freshFile.name.split(".").pop();
       const filePath = `${crypto.randomUUID()}.${fileExt}`;
       
-      const { error: uploadError } = await supabase.storage
+      const { error: uploadError, data: uploadData } = await supabase.storage
         .from("contracts")
-        .upload(filePath, file);
+        .upload(filePath, freshFile);
 
       if (uploadError) throw uploadError;
+
+      console.log("File uploaded successfully:", uploadData);
 
       // Create contract record
       const { data: contract, error: contractError } = await supabase
         .from("contracts")
         .insert({
-          file_name: file.name,
-          file_type: file.type,
+          file_name: freshFile.name,
+          file_type: freshFile.type,
           file_url: filePath,
           status: 'pending'
         })
@@ -49,12 +54,14 @@ const ReviewContract = () => {
 
       if (contractError) throw contractError;
 
+      console.log("Contract record created:", contract);
+
       // Trigger validation
-      const response = await supabase.functions.invoke('validate-contract', {
+      const { error: functionError } = await supabase.functions.invoke('validate-contract', {
         body: { contractId: contract.id }
       });
 
-      if (response.error) throw response.error;
+      if (functionError) throw functionError;
 
       toast({
         title: "Contract uploaded successfully",
