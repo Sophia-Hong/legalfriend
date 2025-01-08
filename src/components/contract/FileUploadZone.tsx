@@ -19,6 +19,7 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
 
   const handleZoneClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!file) {
       inputRef.current?.click();
     }
@@ -26,7 +27,7 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
 
   return (
     <div
-      className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-all
+      className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-all cursor-pointer
         ${dragActive ? "border-highlight bg-surface/50" : "border-muted"}
         ${file ? "bg-surface/30" : "hover:bg-surface/10"}`}
       onDragEnter={handleDrag}

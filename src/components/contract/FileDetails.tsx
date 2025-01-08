@@ -9,9 +9,9 @@ const FileDetails = ({ file }: FileDetailsProps) => {
         <p className="text-primary font-medium mb-2">
           Drag & Drop your contract here
         </p>
-        <button className="text-lg text-blue-600 underline decoration-2 hover:text-blue-700 transition-colors font-medium">
+        <p className="text-lg text-blue-600 underline decoration-2 hover:text-blue-700 transition-colors font-medium cursor-pointer">
           or Click to Browse
-        </button>
+        </p>
         <p className="text-sm text-muted mt-2">(PDF or DOCX files accepted)</p>
       </>
     );
