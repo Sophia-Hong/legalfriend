@@ -1,45 +1,83 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { LeaseTable } from './lease/LeaseTable';
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const LeaseReviewSummary = () => {
-  // Demo data for landing page
-  const demoAnalysis = {
-    summary: "This lease agreement appears to be generally fair, but there are several important points to review.",
-    insights: {
-      rentIncrease: "3% annual increase is within market average",
-      securityDeposit: "$2,000 security deposit is standard for this type of property",
-      maintenanceTerms: "Tenant responsible for minor repairs under $100",
-      noticePeriod: "60-day notice required for termination"
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchLatestAnalysis = async () => {
+      try {
+        console.log('Fetching latest analysis...');
+        const { data, error } = await supabase
+          .from('analyses')
+          .select(`
+            *,
+            contract:contracts(*)
+          `)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (error) throw error;
+        console.log('Analysis data:', data);
+        setAnalysis(data);
+      } catch (error: any) {
+        console.error('Error fetching analysis:', error);
+        toast({
+          variant: "destructive",
+          title: "Error fetching analysis",
+          description: error.message,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLatestAnalysis();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-12 md:py-24 bg-[#F1F0FB]">
+        <Card className="w-full bg-white shadow-xl border border-accent/20">
+          <CardContent className="p-4 md:p-8 text-center">
+            Loading analysis...
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-12 md:py-24 bg-[#F1F0FB]">
       <Card className="w-full bg-white shadow-xl border border-accent/20 hover:shadow-2xl transition-shadow duration-300">
         <CardContent className="p-4 md:p-8">
-          <div className="flex flex-col gap-8">
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Sample Lease Analysis</h3>
-              <p className="text-secondary">{demoAnalysis.summary}</p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              {Object.entries(demoAnalysis.insights).map(([key, value]) => (
-                <div key={key} className="bg-surface p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">{key.replace(/([A-Z])/g, ' $1').trim()}</h4>
-                  <p className="text-sm text-secondary">{value}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex justify-center">
-              <Link 
-                to="/review-contract"
-                className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors"
-              >
-                Review Your Contract
-              </Link>
-            </div>
+          <div className="mb-8">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-medium text-center mb-3">
+              Your Lease Review Analysis
+            </h2>
+            <p className="text-center text-secondary mb-4 text-sm sm:text-base">
+              Our AI assistant identifies key terms and provides market context to assist your understanding
+            </p>
+          </div>
+          
+          <LeaseTable />
+          
+          <div className="mt-8 text-center">
+            <Link to="/review-contract">
+              <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors">
+                Review Another Contract
+              </button>
+            </Link>
+            <p className="mt-3 text-xs sm:text-sm text-secondary">
+              Get your complete lease analysis in minutes
+            </p>
           </div>
         </CardContent>
       </Card>
