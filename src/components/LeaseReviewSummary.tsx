@@ -21,7 +21,7 @@ const fetchLatestAnalysis = async () => {
       `)
       .order("created_at", { ascending: false })
       .limit(1)
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error("Error fetching analysis:", error);
@@ -84,8 +84,17 @@ const LeaseReviewSummary = () => {
 
   if (!analysis) {
     return (
-      <Card className="p-6">
-        <p>No lease reviews found.</p>
+      <Card className="p-6 space-y-4">
+        <h3 className="text-lg font-semibold">No Reviews Yet</h3>
+        <p className="text-sm text-muted-foreground">
+          Start your first lease review to see a summary here.
+        </p>
+        <Button
+          onClick={() => navigate("/review-contract")}
+          variant="outline"
+        >
+          Start Review
+        </Button>
       </Card>
     );
   }
