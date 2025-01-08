@@ -19,14 +19,44 @@ export const useContractUpload = () => {
       return;
     }
 
+    // Check file type
+    const fileType = file.type;
+    const isValidType = fileType === "application/pdf" || 
+                       fileType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    
+    if (!isValidType) {
+      toast({
+        variant: "destructive",
+        title: "Invalid file type",
+        description: "Please upload a PDF or DOCX file.",
+      });
+      return;
+    }
+
+    // Check authentication
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) {
+      // Store file in localStorage before redirecting
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target?.result) {
+          localStorage.setItem('pendingContract', JSON.stringify({
+            name: file.name,
+            type: file.type,
+            data: e.target.result
+          }));
+        }
+      };
+      reader.readAsDataURL(file);
+      
+      // Redirect to signup instead of login for new users
+      navigate('/signup');
+      return;
+    }
+
     setIsUploading(true);
     try {
-      const { data: { session }, error: authError } = await supabase.auth.getSession();
-      
-      if (authError || !session) {
-        throw new Error("Authentication required");
-      }
-
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('*')
@@ -95,10 +125,6 @@ export const useContractUpload = () => {
         title: "Error processing contract",
         description: error.message,
       });
-      
-      if (error.message === "Authentication required" || error.message === "Profile not found") {
-        navigate("/login");
-      }
     } finally {
       setIsUploading(false);
     }
