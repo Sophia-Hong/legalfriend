@@ -18,8 +18,10 @@ const PendingContractHandler = ({ userId, onSuccess }: PendingContractHandlerPro
       try {
         console.log("Processing pending contract for user:", userId);
         const pendingContract = JSON.parse(pendingContractStr);
-        const response = await fetch(pendingContract.data);
-        const blob = await response.blob();
+        
+        // Create a blob from the base64 data
+        const base64Data = pendingContract.data.split(',')[1];
+        const blob = await fetch(`data:${pendingContract.type};base64,${base64Data}`).then(res => res.blob());
         const file = new File([blob], pendingContract.name, { type: pendingContract.type });
 
         const fileExt = file.name.split(".").pop();
@@ -46,7 +48,7 @@ const PendingContractHandler = ({ userId, onSuccess }: PendingContractHandlerPro
         localStorage.removeItem('pendingContract');
         onSuccess();
         
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error processing pending contract:", error);
         toast({
           variant: "destructive",
