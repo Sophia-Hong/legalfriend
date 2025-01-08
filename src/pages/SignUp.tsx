@@ -20,10 +20,7 @@ const SignUp = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         console.log("Active session found, processing pending contract");
-        return <PendingContractHandler 
-          userId={session.user.id} 
-          onSuccess={redirectToReviewContract} 
-        />;
+        // Instead of returning JSX, render the component conditionally
       }
     };
     checkSession();
@@ -48,10 +45,8 @@ const SignUp = () => {
     
     const user = await handleSignUp(email, password);
     if (user) {
-      return <PendingContractHandler 
-        userId={user.id} 
-        onSuccess={redirectToReviewContract} 
-      />;
+      // Instead of returning JSX, we'll render the component conditionally
+      console.log("User signed up successfully, processing pending contract");
     }
   };
 
@@ -75,8 +70,17 @@ const SignUp = () => {
     }
   };
 
+  // Get current session to conditionally render PendingContractHandler
+  const { data: { session } } = supabase.auth.getSession();
+
   return (
     <div className="container max-w-lg mx-auto px-4 py-8 mb-20">
+      {session && (
+        <PendingContractHandler 
+          userId={session.user.id} 
+          onSuccess={redirectToReviewContract} 
+        />
+      )}
       <div className="space-y-6">
         <div className="flex flex-col items-center space-y-2">
           <div className="rounded-full bg-surface p-3">
