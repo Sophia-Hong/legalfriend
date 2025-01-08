@@ -1,21 +1,86 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { supabase } from "@/integrations/supabase/client";
+import SocialLogin from "./SocialLogin";
 
-interface SignUpFormProps {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-  isLoading: boolean;
-}
-
-const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
+const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (signUpError) throw signUpError;
+
+      console.log("Signup successful:", data);
+      
+      // Redirect to review contract page after successful signup
+      navigate("/review-contract");
+      
+    } catch (err: any) {
+      console.error("Signup error:", err);
+      setError(err.message || "An error occurred during sign up");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/review-contract`,
+        },
+      });
+      if (error) throw error;
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
-      <div className="space-y-4">
+    <div className="w-full max-w-md space-y-8 px-4 sm:px-6">
+      <div className="text-center">
+        <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
+        <p className="text-sm text-muted-foreground mt-2">
+          Enter your email below to create your account
+        </p>
+      </div>
+
+      {error && (
+        <Alert variant="destructive">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div className="relative">
           <Mail className="absolute left-3 top-3.5 h-5 w-5 text-muted" />
           <Input
@@ -24,12 +89,10 @@ const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
             placeholder="name@example.com"
             type="email"
             required
-            className="pl-10 py-3 h-12"
+            className="pl-10"
           />
         </div>
-      </div>
 
-      <div className="space-y-4">
         <div className="relative">
           <Lock className="absolute left-3 top-3.5 h-5 w-5 text-muted" />
           <Input
@@ -38,12 +101,12 @@ const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
             type={showPassword ? "text" : "password"}
             placeholder="Create password"
             required
-            className="pl-10 pr-10 py-3 h-12"
+            className="pl-10"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-3.5 text-muted hover:text-primary"
+            className="absolute right-3 top-3.5 text-muted hover:text-primary transition-colors"
           >
             {showPassword ? (
               <EyeOff className="h-5 w-5" />
@@ -52,9 +115,7 @@ const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
             )}
           </button>
         </div>
-      </div>
 
-      <div className="space-y-4">
         <div className="relative">
           <Lock className="absolute left-3 top-3.5 h-5 w-5 text-muted" />
           <Input
@@ -63,12 +124,12 @@ const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm password"
             required
-            className="pl-10 pr-10 py-3 h-12"
+            className="pl-10"
           />
           <button
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3 top-3.5 text-muted hover:text-primary"
+            className="absolute right-3 top-3.5 text-muted hover:text-primary transition-colors"
           >
             {showConfirmPassword ? (
               <EyeOff className="h-5 w-5" />
@@ -77,44 +138,25 @@ const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
             )}
           </button>
         </div>
-      </div>
 
-      <div className="flex items-center space-x-2 pt-2">
-        <input
-          type="checkbox"
-          id="terms"
-          className="rounded border-muted"
-          required
-        />
-        <label htmlFor="terms" className="text-sm text-muted">
-          I agree to the{" "}
-          <a 
-            href="/terms-and-conditions" 
-            className="text-[#1A1F2C] underline hover:text-primary transition-colors"
-          >
-            Terms of Use
-          </a>{" "}
-          and{" "}
-          <a 
-            href="/privacy-policy" 
-            className="text-[#1A1F2C] underline hover:text-primary transition-colors"
-          >
-            Privacy Policy
-          </a>
-        </label>
-      </div>
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? "Creating account..." : "Create account"}
+        </Button>
+      </form>
 
-      <Button
-        type="submit"
-        className={cn(
-          "w-full bg-accent text-primary hover:bg-accent/90 py-3 h-12 mt-4",
-          isLoading && "opacity-50 cursor-not-allowed"
-        )}
-        disabled={isLoading}
-      >
-        {isLoading ? "Creating account..." : "Create account"}
-      </Button>
-    </form>
+      <SocialLogin onGoogleLogin={handleGoogleLogin} />
+
+      <p className="text-center text-sm text-muted-foreground">
+        Already have an account?{" "}
+        <Button
+          variant="link"
+          className="font-semibold text-primary p-0"
+          onClick={() => navigate("/login")}
+        >
+          Sign in
+        </Button>
+      </p>
+    </div>
   );
 };
 
