@@ -22,6 +22,7 @@ export const useAuthState = () => {
   }, []);
 
   const handleUnauthenticatedUpload = (file: File) => {
+    console.log("Storing file for unauthenticated upload");
     const reader = new FileReader();
     reader.onload = (e) => {
       if (e.target?.result) {

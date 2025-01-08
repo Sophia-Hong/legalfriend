@@ -14,17 +14,24 @@ export const useContractUpload = () => {
   const { isAuthenticated, handleUnauthenticatedUpload } = useAuthState();
 
   const handleAnalyze = async () => {
-    if (!validateFile(file)) return;
+    console.log("Starting contract analysis...");
+    
+    if (!validateFile(file)) {
+      console.log("File validation failed");
+      return;
+    }
+    
     if (!file) return;
 
-    // Check authentication
     if (!isAuthenticated) {
+      console.log("User not authenticated, redirecting to signup");
       handleUnauthenticatedUpload(file);
       return;
     }
 
     setIsUploading(true);
     try {
+      console.log("Uploading contract to Supabase...");
       const { data: { session } } = await supabase.auth.getSession();
       
       const { data: profile, error: profileError } = await supabase
