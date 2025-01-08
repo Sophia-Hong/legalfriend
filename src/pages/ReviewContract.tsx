@@ -15,7 +15,7 @@ const ReviewContract = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Check for authentication
+  // Check for authentication and profile
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -24,6 +24,24 @@ const ReviewContract = () => {
           variant: "destructive",
           title: "Authentication required",
           description: "Please sign in to upload contracts.",
+        });
+        navigate("/login");
+        return;
+      }
+
+      // Check if profile exists
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', session.user.id)
+        .maybeSingle();
+
+      if (profileError || !profile) {
+        console.error("Profile error:", profileError);
+        toast({
+          variant: "destructive",
+          title: "Profile error",
+          description: "There was an error accessing your profile. Please try signing in again.",
         });
         navigate("/login");
       }
@@ -44,11 +62,22 @@ const ReviewContract = () => {
 
     setIsUploading(true);
     try {
-      // Get current user
+      // Get current user and check profile
       const { data: { session }, error: authError } = await supabase.auth.getSession();
       
       if (authError || !session) {
         throw new Error("Authentication required");
+      }
+
+      // Verify profile exists
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', session.user.id)
+        .maybeSingle();
+
+      if (profileError || !profile) {
+        throw new Error("Profile not found");
       }
 
       // Create a new File object to ensure we have a fresh stream
@@ -74,7 +103,7 @@ const ReviewContract = () => {
           file_type: freshFile.type,
           file_url: filePath,
           status: 'pending',
-          user_id: session.user.id
+          user_id: profile.id
         })
         .select()
         .single();
@@ -118,7 +147,7 @@ const ReviewContract = () => {
       });
       
       // If authentication error, redirect to login
-      if (error.message === "Authentication required") {
+      if (error.message === "Authentication required" || error.message === "Profile not found") {
         navigate("/login");
       }
     } finally {
