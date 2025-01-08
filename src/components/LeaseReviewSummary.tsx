@@ -13,17 +13,19 @@ const LeaseReviewSummary = () => {
   useEffect(() => {
     const fetchLatestAnalysis = async () => {
       try {
+        console.log('Fetching latest analysis...');
         const { data, error } = await supabase
-          .from('contract_analyses')
+          .from('analyses')
           .select(`
             *,
             contract:contracts(*)
           `)
           .order('created_at', { ascending: false })
           .limit(1)
-          .single();
+          .maybeSingle();
 
         if (error) throw error;
+        console.log('Analysis data:', data);
         setAnalysis(data);
       } catch (error: any) {
         console.error('Error fetching analysis:', error);
