@@ -1,85 +1,116 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent } from "@/components/ui/card";
-import { LeaseTable } from './lease/LeaseTable';
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useNavigate } from "react-router-dom";
+import { Database } from "@/integrations/supabase/types";
+
+type Analysis = Database["public"]["Tables"]["analyses"]["Row"] & {
+  contract: Database["public"]["Tables"]["contracts"]["Row"];
+};
+
+const fetchLatestAnalysis = async () => {
+  try {
+    console.log("Fetching latest analysis...");
+    const { data, error } = await supabase
+      .from("analyses")
+      .select(`
+        *,
+        contract:contracts(*)
+      `)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error) {
+      console.error("Error fetching analysis:", error);
+      throw error;
+    }
+
+    console.log("Fetched analysis:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching analysis:", {
+      message: error.message,
+      details: error.details,
+      hint: error.hint,
+      code: error.code
+    });
+    throw error;
+  }
+};
 
 const LeaseReviewSummary = () => {
+  const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [analysis, setAnalysis] = useState<any>(null);
-  const { toast } = useToast();
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchLatestAnalysis = async () => {
+    const loadAnalysis = async () => {
       try {
-        const { data, error } = await supabase
-          .from('contract_analyses')
-          .select(`
-            *,
-            contract:contracts(*)
-          `)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .single();
-
-        if (error) throw error;
+        const data = await fetchLatestAnalysis();
         setAnalysis(data);
-      } catch (error: any) {
-        console.error('Error fetching analysis:', error);
-        toast({
-          variant: "destructive",
-          title: "Error fetching analysis",
-          description: error.message,
-        });
+      } catch (err) {
+        setError("Failed to load lease review summary");
+        console.error(err);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchLatestAnalysis();
+    loadAnalysis();
   }, []);
 
   if (isLoading) {
     return (
-      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-12 md:py-24 bg-[#F1F0FB]">
-        <Card className="w-full bg-white shadow-xl border border-accent/20">
-          <CardContent className="p-4 md:p-8 text-center">
-            Loading analysis...
-          </CardContent>
-        </Card>
-      </div>
+      <Card className="p-6 space-y-4">
+        <Skeleton className="h-8 w-3/4" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-10 w-32" />
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Card className="p-6">
+        <p className="text-red-500">{error}</p>
+      </Card>
+    );
+  }
+
+  if (!analysis) {
+    return (
+      <Card className="p-6">
+        <p>No lease reviews found.</p>
+      </Card>
     );
   }
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-12 md:py-24 bg-[#F1F0FB]">
-      <Card className="w-full bg-white shadow-xl border border-accent/20 hover:shadow-2xl transition-shadow duration-300">
-        <CardContent className="p-4 md:p-8">
-          <div className="mb-8">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-medium text-center mb-3">
-              Your Lease Review Analysis
-            </h2>
-            <p className="text-center text-secondary mb-4 text-sm sm:text-base">
-              Our AI assistant identifies key terms and provides market context to assist your understanding
-            </p>
-          </div>
-          
-          <LeaseTable />
-          
-          <div className="mt-8 text-center">
-            <Link to="/review-contract">
-              <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors">
-                Review Another Contract
-              </button>
-            </Link>
-            <p className="mt-3 text-xs sm:text-sm text-secondary">
-              Get your complete lease analysis in minutes
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <Card className="p-6 space-y-4">
+      <div>
+        <h3 className="text-lg font-semibold">Latest Lease Review</h3>
+        <p className="text-sm text-muted-foreground">
+          {new Date(analysis.created_at).toLocaleDateString()}
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <p className="text-sm font-medium">Contract: {analysis.contract.file_name}</p>
+        <p className="text-sm">{analysis.summary}</p>
+      </div>
+
+      <Button
+        onClick={() => navigate(`/analysis/${analysis.id}`)}
+        variant="outline"
+      >
+        View Details
+      </Button>
+    </Card>
   );
 };
 

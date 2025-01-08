@@ -7,49 +7,16 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { supabase } from "@/integrations/supabase/client";
 import SocialLogin from "./SocialLogin";
 
-const SignUpForm = () => {
+interface SignUpFormProps {
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  isLoading: boolean;
+}
+
+const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
-    setIsLoading(true);
-
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const confirmPassword = formData.get("confirmPassword") as string;
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const { data, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if (signUpError) throw signUpError;
-
-      console.log("Signup successful:", data);
-      
-      // Redirect to review contract page after successful signup
-      navigate("/review-contract");
-      
-    } catch (err: any) {
-      console.error("Signup error:", err);
-      setError(err.message || "An error occurred during sign up");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleGoogleLogin = async () => {
     try {
@@ -80,7 +47,7 @@ const SignUpForm = () => {
         </Alert>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={onSubmit} className="space-y-4">
         <div className="relative">
           <Mail className="absolute left-3 top-3.5 h-5 w-5 text-muted" />
           <Input
