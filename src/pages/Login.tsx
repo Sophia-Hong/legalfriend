@@ -5,7 +5,7 @@ import SocialLogin from "@/components/auth/SocialLogin";
 import { LogIn } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { AuthError } from "@supabase/supabase-js";
+import { AuthError, AuthApiError } from "@supabase/supabase-js";
 
 const Login = () => {
   const { toast } = useToast();
@@ -23,6 +23,25 @@ const Login = () => {
     checkSession();
   }, [navigate]);
 
+  const getErrorMessage = (error: AuthError) => {
+    console.log("Auth error details:", error);
+    
+    if (error instanceof AuthApiError) {
+      switch (error.status) {
+        case 400:
+          if (error.message.includes("Invalid login credentials")) {
+            return "Invalid email or password. Please check your credentials and try again.";
+          }
+          break;
+        case 422:
+          return "Invalid email format. Please enter a valid email address.";
+        case 429:
+          return "Too many login attempts. Please try again later.";
+      }
+    }
+    return error.message || "An error occurred during sign in. Please try again.";
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
@@ -32,6 +51,8 @@ const Login = () => {
     const password = formData.get("password") as string;
     
     try {
+      console.log("Attempting to sign in with:", { email });
+      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -40,6 +61,7 @@ const Login = () => {
       if (error) throw error;
 
       if (data.session) {
+        console.log("Login successful:", data.session);
         toast({
           title: "Success",
           description: "Successfully logged in",
@@ -53,7 +75,7 @@ const Login = () => {
       toast({
         variant: "destructive",
         title: "Error",
-        description: authError.message || "Failed to sign in. Please try again.",
+        description: getErrorMessage(authError),
       });
     } finally {
       setIsLoading(false);
@@ -64,6 +86,9 @@ const Login = () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
       });
 
       if (error) throw error;
@@ -72,7 +97,7 @@ const Login = () => {
       toast({
         variant: "destructive",
         title: "Error",
-        description: authError.message || "Failed to sign in with Google. Please try again.",
+        description: getErrorMessage(authError),
       });
     }
   };
