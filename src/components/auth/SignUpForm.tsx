@@ -20,7 +20,6 @@ const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
           <Mail className="absolute left-3 top-3.5 h-5 w-5 text-muted" />
           <Input
             id="email"
-            name="email"
             placeholder="name@example.com"
             type="email"
             required
@@ -34,7 +33,6 @@ const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
           <Lock className="absolute left-3 top-3.5 h-5 w-5 text-muted" />
           <Input
             id="password"
-            name="password"
             type={showPassword ? "text" : "password"}
             placeholder="Create password"
             required
@@ -59,7 +57,6 @@ const SignUpForm = ({ onSubmit, isLoading }: SignUpFormProps) => {
           <Lock className="absolute left-3 top-3.5 h-5 w-5 text-muted" />
           <Input
             id="confirmPassword"
-            name="confirmPassword"
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm password"
             required
