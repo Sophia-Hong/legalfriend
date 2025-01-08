@@ -18,9 +18,11 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
   } = useFileUpload(onFileChange);
 
   const handleZoneClick = (e: React.MouseEvent) => {
+    console.log("Zone clicked");
     e.preventDefault();
     e.stopPropagation();
     if (!file) {
+      console.log("Triggering file input click");
       inputRef.current?.click();
     }
   };
@@ -44,6 +46,7 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
         accept=".pdf,.docx"
         onChange={handleChange}
         className="hidden"
+        onClick={(e) => e.stopPropagation()}
       />
 
       <UploadZoneContent file={file} />
