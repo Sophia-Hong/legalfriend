@@ -1,40 +1,80 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import LoginForm from "@/components/auth/LoginForm";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { LogIn } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { AuthError } from "@supabase/supabase-js";
 
 const Login = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/");
+      }
+    };
+    checkSession();
+  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    
     try {
-      // TODO: Implement login logic with Supabase
-      toast({
-        title: "Coming soon",
-        description: "Login functionality will be implemented soon",
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
+
+      if (error) throw error;
+
+      if (data.session) {
+        toast({
+          title: "Success",
+          description: "Successfully logged in",
+        });
+        navigate("/");
+      }
     } catch (error) {
+      const authError = error as AuthError;
+      console.error("Login error:", authError);
+      
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Something went wrong. Please try again.",
+        description: authError.message || "Failed to sign in. Please try again.",
       });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleGoogleLogin = () => {
-    toast({
-      title: "Coming soon",
-      description: "Google sign-in will be implemented soon",
-    });
+  const handleGoogleLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      });
+
+      if (error) throw error;
+    } catch (error) {
+      const authError = error as AuthError;
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: authError.message || "Failed to sign in with Google. Please try again.",
+      });
+    }
   };
 
   return (

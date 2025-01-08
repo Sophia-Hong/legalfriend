@@ -19,6 +19,7 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
         <div className="relative">
           <Mail className="absolute left-4 top-3.5 h-5 w-5 text-muted" />
           <Input
+            name="email"
             id="email"
             placeholder="name@example.com"
             type="email"
@@ -30,6 +31,7 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
         <div className="relative">
           <Lock className="absolute left-4 top-3.5 h-5 w-5 text-muted" />
           <Input
+            name="password"
             id="password"
             type={showPassword ? "text" : "password"}
             required
