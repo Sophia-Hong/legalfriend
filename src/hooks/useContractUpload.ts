@@ -41,7 +41,10 @@ export const useContractUpload = () => {
         .maybeSingle();
 
       if (profileError || !profile) {
-        throw new Error("Profile not found");
+        console.log("Profile not found, redirecting to signup");
+        handleUnauthenticatedUpload(file);
+        navigate('/signup');
+        return;
       }
 
       const freshFile = new File([file], file.name, { type: file.type });
