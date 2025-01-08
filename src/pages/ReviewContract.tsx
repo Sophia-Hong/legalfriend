@@ -4,14 +4,16 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import FileUploadZone from "@/components/contract/FileUploadZone";
 import EmailCollectionDialog from "@/components/contract/EmailCollectionDialog";
+import PrivacyNotice from "@/components/contract/PrivacyNotice";
 import { supabase } from "@/integrations/supabase/client";
 
 const ReviewContract = () => {
   const [file, setFile] = useState<File | null>(null);
   const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const { toast } = useToast();
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     if (!file) {
       toast({
         variant: "destructive",
@@ -21,39 +23,47 @@ const ReviewContract = () => {
       return;
     }
 
-    setShowEmailDialog(true);
-  };
-
-  const handleEmailSubmit = async (email: string) => {
+    setIsUploading(true);
     try {
       // Upload file to Supabase Storage
-      const fileExt = file!.name.split(".").pop();
+      const fileExt = file.name.split(".").pop();
       const filePath = `${crypto.randomUUID()}.${fileExt}`;
       
       const { error: uploadError } = await supabase.storage
         .from("contracts")
-        .upload(filePath, file!);
+        .upload(filePath, file);
 
       if (uploadError) throw uploadError;
 
-      // Create contract submission record
-      const { error: dbError } = await supabase
-        .from("contract_submissions")
+      // Create contract record
+      const { data: contract, error: contractError } = await supabase
+        .from("contracts")
         .insert({
-          user_email: email,
-          contract_file_path: filePath,
-        });
+          file_name: file.name,
+          file_type: file.type,
+          file_url: filePath,
+          status: 'pending'
+        })
+        .select()
+        .single();
 
-      if (dbError) throw dbError;
+      if (contractError) throw contractError;
+
+      // Trigger validation
+      const response = await supabase.functions.invoke('validate-contract', {
+        body: { contractId: contract.id }
+      });
+
+      if (response.error) throw response.error;
 
       toast({
         title: "Contract uploaded successfully",
-        description: "Redirecting to payment...",
-        duration: 3000, // Auto dismiss after 3 seconds
+        description: "Your contract is being analyzed. We'll notify you when it's ready.",
+        duration: 5000,
       });
 
-      // TODO: Redirect to payment page
-      setShowEmailDialog(false);
+      // Redirect to analysis page
+      window.location.href = '/lease-review-summary';
       
     } catch (error: any) {
       console.error("Error processing contract:", error);
@@ -62,6 +72,8 @@ const ReviewContract = () => {
         title: "Error processing contract",
         description: error.message,
       });
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -71,7 +83,7 @@ const ReviewContract = () => {
         <h1 className="text-4xl font-bold text-primary mb-6 text-center">
           Upload Your Contract
         </h1>
-        <p className="text-secondary mb-8">
+        <p className="text-secondary mb-8 text-center">
           Upload your rental agreement for a professional review. We'll analyze
           your contract and provide detailed insights to protect your rights.
         </p>
@@ -84,17 +96,20 @@ const ReviewContract = () => {
               size="lg"
               className="bg-highlight text-primary hover:bg-highlight/90 gap-2"
               onClick={handleAnalyze}
+              disabled={isUploading}
             >
               <Sparkles className="w-5 h-5" />
-              Analyze Contract
+              {isUploading ? "Processing..." : "Analyze Contract"}
             </Button>
           </div>
+
+          <PrivacyNotice />
         </div>
 
         <EmailCollectionDialog
           isOpen={showEmailDialog}
           onClose={() => setShowEmailDialog(false)}
-          onSubmit={handleEmailSubmit}
+          onSubmit={() => {}}
         />
       </div>
     </div>

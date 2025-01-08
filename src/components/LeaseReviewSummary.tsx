@@ -1,8 +1,57 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from "@/components/ui/card";
 import { LeaseTable } from './lease/LeaseTable';
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const LeaseReviewSummary = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchLatestAnalysis = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('contract_analyses')
+          .select(`
+            *,
+            contract:contracts(*)
+          `)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single();
+
+        if (error) throw error;
+        setAnalysis(data);
+      } catch (error: any) {
+        console.error('Error fetching analysis:', error);
+        toast({
+          variant: "destructive",
+          title: "Error fetching analysis",
+          description: error.message,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLatestAnalysis();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-12 md:py-24 bg-[#F1F0FB]">
+        <Card className="w-full bg-white shadow-xl border border-accent/20">
+          <CardContent className="p-4 md:p-8 text-center">
+            Loading analysis...
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-12 md:py-24 bg-[#F1F0FB]">
       <Card className="w-full bg-white shadow-xl border border-accent/20 hover:shadow-2xl transition-shadow duration-300">
@@ -21,7 +70,7 @@ const LeaseReviewSummary = () => {
           <div className="mt-8 text-center">
             <Link to="/review-contract">
               <button className="inline-flex items-center gap-2 bg-highlight text-primary px-6 py-3 rounded-lg font-medium hover:bg-highlight/90 transition-colors">
-                Review Your Lease Now
+                Review Another Contract
               </button>
             </Link>
             <p className="mt-3 text-xs sm:text-sm text-secondary">
