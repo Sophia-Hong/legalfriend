@@ -17,7 +17,7 @@ const UploadSection = ({ file, isUploading, onFileChange, onAnalyze }: UploadSec
       <div className="text-center">
         <Button
           size="lg"
-          className="bg-highlight text-primary hover:bg-highlight/90 gap-2"
+          className="bg-[#EEFF00] text-black hover:bg-[#EEFF00]/90 gap-2 font-medium px-8"
           onClick={onAnalyze}
           disabled={isUploading}
         >

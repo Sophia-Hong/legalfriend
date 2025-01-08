@@ -29,7 +29,7 @@ const FileUploadZone = ({ file, onFileChange }: FileUploadZoneProps) => {
 
   return (
     <div
-      className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-all cursor-pointer
+      className={`relative border-2 border-dashed rounded-lg p-12 text-center transition-all cursor-pointer max-w-2xl mx-auto
         ${dragActive ? "border-highlight bg-surface/50" : "border-muted"}
         ${file ? "bg-surface/30" : "hover:bg-surface/10"}`}
       onDragEnter={handleDrag}

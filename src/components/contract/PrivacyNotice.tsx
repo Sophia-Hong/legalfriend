@@ -1,13 +1,11 @@
-import { AlertCircle } from "lucide-react";
+import { Info } from "lucide-react";
 
 const PrivacyNotice = () => {
   return (
-    <div className="mt-8 p-4 bg-surface/50 rounded-lg flex gap-3">
-      <AlertCircle className="text-primary shrink-0" />
-      <p className="text-sm text-secondary">
-        Your privacy is our priority. All uploaded documents are encrypted and
-        handled with strict confidentiality. We only use this information to
-        provide you with accurate contract analysis.
+    <div className="flex items-center justify-center gap-2 text-sm text-muted mt-12 max-w-2xl mx-auto text-center">
+      <Info className="w-4 h-4 flex-shrink-0" />
+      <p>
+        Your privacy is our priority. All uploaded documents are encrypted and handled with strict confidentiality. We only use this information to provide you with accurate contract analysis.
       </p>
     </div>
   );

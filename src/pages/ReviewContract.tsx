@@ -25,19 +25,21 @@ const ReviewContract = () => {
         return;
       }
 
+      console.log("Checking profile for user:", session.user.id);
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', session.user.id)
         .maybeSingle();
 
-      if (profileError || !profile) {
+      if (profileError) {
         console.error("Profile error:", profileError);
         toast({
           variant: "destructive",
           title: "Profile error",
           description: "There was an error accessing your profile. Please try signing in again.",
         });
+        await supabase.auth.signOut();
         navigate("/login");
       }
     };
@@ -46,8 +48,8 @@ const ReviewContract = () => {
   }, [navigate, toast]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-3xl mx-auto">
+    <div className="container mx-auto px-4 py-12">
+      <div className="max-w-4xl mx-auto">
         <ContractHeader />
         
         <UploadSection
