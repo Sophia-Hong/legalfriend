@@ -1,45 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import SignUpForm from "@/components/auth/SignUpForm";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { UserPlus } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { AuthError, AuthApiError } from "@supabase/supabase-js";
+import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 
 const SignUp = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        navigate('/review-contract');
-      }
-    };
-    checkSession();
-  }, [navigate]);
-
-  const getErrorMessage = (error: AuthError) => {
-    console.log("Auth error details:", error);
-    
-    if (error instanceof AuthApiError) {
-      switch (error.status) {
-        case 400:
-          if (error.message.includes("already registered")) {
-            return "This email is already registered. Please try signing in instead.";
-          }
-          break;
-        case 422:
-          return "Invalid email format. Please enter a valid email address.";
-        case 429:
-          return "Too many signup attempts. Please try again later.";
-      }
-    }
-    return error.message || "An error occurred during sign up. Please try again.";
-  };
+  const { redirectToReviewContract } = useAuthRedirect();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,7 +51,7 @@ const SignUp = () => {
           title: "Success",
           description: "Please check your email to verify your account",
         });
-        navigate('/review-contract');
+        redirectToReviewContract();
       }
     } catch (error) {
       const authError = error as AuthError;
@@ -87,7 +59,7 @@ const SignUp = () => {
       toast({
         variant: "destructive",
         title: "Error",
-        description: getErrorMessage(authError),
+        description: authError.message,
       });
     } finally {
       setIsLoading(false);
@@ -109,7 +81,7 @@ const SignUp = () => {
       toast({
         variant: "destructive",
         title: "Error",
-        description: getErrorMessage(authError),
+        description: authError.message,
       });
     }
   };
