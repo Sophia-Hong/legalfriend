@@ -49,10 +49,10 @@ export const useContractUpload = () => {
 
       const freshFile = new File([file], file.name, { type: file.type });
       const fileExt = freshFile.name.split(".").pop();
-      const filePath = `${crypto.randomUUID()}.${fileExt}`;
+      const filePath = `${profile.id}/${crypto.randomUUID()}.${fileExt}`;
       
       const { error: uploadError, data: uploadData } = await supabase.storage
-        .from("contracts")
+        .from("lease_documents")
         .upload(filePath, freshFile);
 
       if (uploadError) throw uploadError;
@@ -75,16 +75,8 @@ export const useContractUpload = () => {
 
       console.log("Contract record created:", contract);
 
-      const { error: analysisError } = await supabase
-        .from("analyses")
-        .insert({
-          contract_id: contract.id,
-          status: 'pending'
-        });
-
-      if (analysisError) throw analysisError;
-
-      const { error: functionError } = await supabase.functions.invoke('validate-contract', {
+      // Call the process-lease function to analyze the document
+      const { error: functionError } = await supabase.functions.invoke('process-lease', {
         body: { contractId: contract.id }
       });
 
@@ -98,7 +90,7 @@ export const useContractUpload = () => {
 
       navigate('/lease-review-summary');
       
-    } catch (error: any) {
+    } catch (error: Error) {
       console.error("Error processing contract:", error);
       toast({
         variant: "destructive",

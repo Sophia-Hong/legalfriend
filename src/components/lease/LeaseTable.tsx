@@ -2,7 +2,23 @@ import { useEffect, useRef } from 'react';
 import { LeaseSection } from './LeaseSection';
 import { leaseSections } from './leaseData';
 
-export const LeaseTable = () => {
+interface KeyTerm {
+  id: string;
+  provision: string;
+  section: string;
+  details: string[];
+  assessment: {
+    type: 'success' | 'warning' | 'error';
+    text: string;
+    info?: string;
+  };
+}
+
+interface LeaseTableProps {
+  keyTerms?: KeyTerm[];
+}
+
+export const LeaseTable = ({ keyTerms }: LeaseTableProps = {}) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -11,6 +27,9 @@ export const LeaseTable = () => {
       scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
     }
   }, []);
+
+  // Use provided keyTerms or fall back to demo data
+  const termsToDisplay = keyTerms || leaseSections;
 
   return (
     <div className="overflow-hidden rounded-lg border border-accent/20">
@@ -33,8 +52,8 @@ export const LeaseTable = () => {
             </tr>
           </thead>
           <tbody>
-            {leaseSections.map((section, index) => (
-              <LeaseSection key={index} {...section} />
+            {termsToDisplay.map((section, index) => (
+              <LeaseSection key={section.id || index} {...section} />
             ))}
           </tbody>
         </table>
