@@ -33,7 +33,7 @@ serve(async (req) => {
 
     // Create initial analysis record
     const { error: analysisError } = await supabase
-      .from('contract_analyses')
+      .from('analyses')
       .insert({
         contract_id: contractId,
         status: 'processing'

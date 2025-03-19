@@ -48,7 +48,7 @@ const PendingContractHandler = ({ userId, onSuccess }: PendingContractHandlerPro
         localStorage.removeItem('pendingContract');
         onSuccess();
         
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Error processing pending contract:", error);
         toast({
           variant: "destructive",

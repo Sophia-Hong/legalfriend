@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import PendingContractHandler from "./PendingContractHandler";
+import { Session } from "@supabase/supabase-js";
 
 interface SessionHandlerProps {
   onSuccess: () => void;
 }
 
 const SessionHandler = ({ onSuccess }: SessionHandlerProps) => {
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
     const checkSession = async () => {

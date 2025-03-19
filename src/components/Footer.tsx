@@ -22,8 +22,8 @@ const Footer = () => {
           </div>
           
           <FooterSection title="Product">
-            <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
+            <li><Link to="/features" className="hover:text-white transition-colors">Features</Link></li>
+            <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
           </FooterSection>
           
           <FooterSection title="Resources">
@@ -32,7 +32,7 @@ const Footer = () => {
           </FooterSection>
           
           <FooterSection title="Company">
-            <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+            <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
             <li><Link to="/contact-us" className="hover:text-white transition-colors">Contact</Link></li>
             <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
             <li><Link to="/terms-and-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link></li>

@@ -17,8 +17,9 @@ export interface Analysis {
   id: string;
   contract_id: string;
   summary: string | null;
-  insights: Record<string, any> | null;
-  benchmarks: Record<string, any> | null;
+  insights: Record<string, unknown> | null;
+  benchmarks: Record<string, unknown> | null;
+  status: ContractStatus;
   created_at: string;
   updated_at: string;
 }
