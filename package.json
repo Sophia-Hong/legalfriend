@@ -5,14 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "build:dev": "vite build --mode development",
-    "lint": "eslint .",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "supabase:start": "node supabase/start-local.js",
     "supabase:deploy": "node supabase/deploy.js",
-    "supabase:functions": "supabase functions serve",
-    "supabase:deploy-functions": "node supabase/deploy-functions.js"
+    "supabase:deploy-functions": "node supabase/deploy-functions.js",
+    "update-auth": "node supabase/update-auth-config.js",
+    "setup-domain": "node supabase/setup-custom-domain.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
