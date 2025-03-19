@@ -1,8 +1,4 @@
-const stats = [
-  { number: "99%", label: "Customer Satisfaction" },
-  { number: "24/7", label: "Support Available" },
-  { number: "150+", label: "Countries Served" },
-];
+import { stats } from "../data/statsData";
 
 const Stats = () => {
   return (

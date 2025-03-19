@@ -9,13 +9,15 @@ LegalFriend is an AI-powered application that helps users analyze lease agreemen
 - **Market Context**: Get insights on how your lease terms compare to market standards
 - **Secure Document Storage**: All documents are securely stored with proper access controls
 - **Payment Integration**: Stripe integration for premium analysis features
+- **Admin Dashboard**: Manage prompts, settings, and view logs through an admin interface
 
 ## Tech Stack
 
-- **Frontend**: React, Vite, Radix UI components
+- **Frontend**: React, Vite, Radix UI components, Chakra UI
 - **Backend**: Supabase (Database, Storage, Edge Functions)
 - **AI Processing**: Mistral AI for document analysis
 - **Payments**: Stripe
+- **Domain**: legalfriend.ai with custom Supabase domain (api.legalfriend.ai)
 
 ## Setup Instructions
 
@@ -26,6 +28,7 @@ LegalFriend is an AI-powered application that helps users analyze lease agreemen
 - Supabase CLI
 - Stripe account (for payment processing)
 - Mistral AI API key
+- Domain registration for legalfriend.ai (for production)
 
 ### Environment Setup
 
@@ -48,6 +51,7 @@ LegalFriend is an AI-powered application that helps users analyze lease agreemen
    STRIPE_SECRET_KEY=your_stripe_secret_key
    STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
    FRONTEND_URL=http://localhost:5173
+   CUSTOM_DOMAIN=api.legalfriend.ai  # For production
    ```
 
 ### Supabase Setup
@@ -75,6 +79,17 @@ LegalFriend is an AI-powered application that helps users analyze lease agreemen
      - `STRIPE_WEBHOOK_SECRET`
      - `FRONTEND_URL`
 
+### Domain Setup (Production)
+
+For production deployment with the legalfriend.ai domain:
+
+1. Register the legalfriend.ai domain with a domain registrar
+2. Configure DNS settings as described in [DOMAIN-SETUP.md](./DOMAIN-SETUP.md)
+3. Run the domain setup script:
+   ```bash
+   npm run setup-domain
+   ```
+
 ### Running the Application
 
 1. Start the development server:
@@ -98,6 +113,15 @@ LegalFriend is an AI-powered application that helps users analyze lease agreemen
 - **get-analysis**: Retrieves analysis results with access control based on payment status
 - **create-payment**: Creates Stripe checkout sessions for payments
 - **stripe-webhook**: Handles Stripe webhook events for payment status updates
+- **admin-api**: Admin-only API for managing prompts, settings, and viewing logs
+
+## Admin Dashboard
+
+The admin dashboard allows authorized users to:
+- Manage AI prompts and their versions
+- Configure application settings
+- View system logs
+- Access is restricted to users with the 'admin' role
 
 ## License
 

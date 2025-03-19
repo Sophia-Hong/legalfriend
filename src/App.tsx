@@ -13,6 +13,7 @@ import LeaseReviewSummary from "./pages/LeaseReviewSummary";
 import About from "./pages/About";
 import Features from "./pages/Features";
 import Pricing from "./pages/Pricing";
+import Admin from "./pages/Admin";
 import { Toaster } from "@/components/ui/toaster";
 import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
@@ -20,6 +21,11 @@ import BottomNav from "./components/BottomNav";
 import Footer from "./components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ChakraProvider } from "@chakra-ui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+// Create React Query client
+const queryClient = new QueryClient();
 
 // Create a layout component to wrap all pages
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -52,29 +58,34 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<Login />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-          <Route path="/review-contract" element={<ReviewContract />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/useful-tips" element={<UsefulTips />} />
-          <Route path="/lease-review-summary" element={<LeaseReviewSummary />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/pricing" element={<Pricing />} />
-        </Routes>
-      </Layout>
-      <Toaster />
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider>
+        <Router>
+          <ScrollToTop />
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<Login />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+              <Route path="/review-contract" element={<ReviewContract />} />
+              <Route path="/contact-us" element={<ContactUs />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/useful-tips" element={<UsefulTips />} />
+              <Route path="/lease-review-summary" element={<LeaseReviewSummary />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/admin" element={<Admin />} />
+            </Routes>
+          </Layout>
+          <Toaster />
+        </Router>
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }
 

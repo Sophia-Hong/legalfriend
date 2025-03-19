@@ -1,24 +1,11 @@
-const features = [
-  {
-    title: "Intuitive Design",
-    description: "Clean interface that puts your needs first",
-  },
-  {
-    title: "Smart Automation",
-    description: "Let the system work for you while you focus on what matters",
-  },
-  {
-    title: "Real-time Analytics",
-    description: "Make informed decisions with up-to-the-minute data",
-  },
-];
+import { features } from "../data/featuresData";
 
 const Features = () => {
   return (
     <section id="features" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-          Designed for Excellence
+          Designed for Tenants
         </h2>
         
         <div className="grid md:grid-cols-3 gap-8">
