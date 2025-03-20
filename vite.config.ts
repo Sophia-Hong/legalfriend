@@ -25,11 +25,11 @@ export default defineConfig(({ mode }) => {
       },
     },
     // Base URL configuration based on environment
-    base: mode === 'production' ? 'https://legalfriend.ai/' : '/',
+    base: mode === 'production' ? '/' : '/',
     // Define environment variables to be used in the app
     define: {
       'import.meta.env.VITE_APP_DOMAIN': JSON.stringify(
-        mode === 'production' ? 'legalfriend.ai' : 'localhost'
+        mode === 'production' ? 'legalfriend.vercel.app' : 'localhost'
       ),
       'import.meta.env.VITE_APP_API_DOMAIN': JSON.stringify(
         mode === 'production' ? 'api.legalfriend.ai' : env.VITE_SUPABASE_URL || 'localhost:8080'
